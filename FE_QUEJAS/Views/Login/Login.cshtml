@@ -1,0 +1,68 @@
+﻿@model FE_QUEJAS.Models.LoginRequest
+
+@{
+    ViewBag.Title = "Inicio de Sesión";
+}
+
+
+@Html.AntiForgeryToken()
+
+<div class="container">
+    <div class="card">
+        <div class="card-body sombras col-auto" style="padding: 0px;">
+            <div class="row" ">
+                <div class="col-6 bg-black m-0 row justify-content-center align-items-center">
+                    <div class="col-auto p-5 text-white text-center">
+                        <p class="h10 text-white">Es un gusto saludarte</p>
+                        <p class="h3 text-white">Bienvenido De Nuevo</p>
+                        <p class="h1">-</p>
+                        <p class="h15">Lorem ipsumLorem ipsumLorem ipsumLorem ipsumLorem ipsumLorem ipsumLorem ipsum</p>
+                    </div>
+                </div>
+                <div class="col-6 m-0 row justify-content-center align-items-center">
+                    <div class="col-6 p-5 text-center">
+
+                        @using (Html.BeginForm("iniciarSesion", "Login", FormMethod.Post))
+                        {
+                            <p class="h10 text-black">Login</p>
+                            <p class="h3 text-black">Ingresa tus Datos</p>
+                            <p class="h1">-</p>
+                            <div class="form-group">
+                                @Html.LabelFor(model => model.Usuario, htmlAttributes: new { @class = "control-label" })
+
+                                @Html.EditorFor(model => model.Usuario, new { htmlAttributes = new { @class = "form-control text-center" } })
+                                @Html.ValidationMessageFor(model => model.Usuario, "", new { @class = "text-danger control-label" })
+
+                            </div>
+                            <div class="form-group">
+                                @Html.LabelFor(model => model.Pass, htmlAttributes: new { @class = "control-label" })
+
+                                @Html.EditorFor(model => model.Pass, new { htmlAttributes = new { @class = "form-control text-center" } })
+                                @Html.ValidationMessageFor(model => model.Pass, "", new { @class = "text-danger control-label" })
+                            </div>
+
+                            @Html.ValidationSummary(true, "", new { @class = "text-danger control-label" })
+
+                            <div class="row">
+                                <br />
+                            </div>
+                            <div class="row">
+                                <input type="submit" name ="btnLogin" value="Inicia Sesión" class="btn btn-outline-dark form-control" />                                
+                            </div>
+                            <br/>
+                            <div class="row">
+                                <input type="submit" formnovalidate name="btnRegistro" value="Regístrate" class="btn btn-outline-dark form-control" />                                
+                            </div>
+                        }
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+@section Scripts {
+
+}
