@@ -13,11 +13,12 @@ using System.Web.Mvc;
 namespace FE_QUEJAS.Controllers
 {
     public class LoginController : Controller
-    {
-
+    {        
         clsLoginService _Login = new clsLoginService();
+        string LayoutLogin = "~/Views/Shared/_LayoutLogin.cshtml";
         public ActionResult Login()
         {
+            ViewBag.Layout = LayoutLogin;
             return View();
         }
 
@@ -31,10 +32,11 @@ namespace FE_QUEJAS.Controllers
                 {
                     token = await _Login.iniciarSesionApi(login);
                     if (token != "NE")
-                    {
-                        Session["Token"] = token;
-                        Session["Usuario"] = login.Usuario;
-                        Session["Pass"] = login.Pass;
+                    {                        
+                        var cookie = new HttpCookie("TokenJwt", token);
+                        cookie.HttpOnly = true;
+                        Response.Cookies.Add(cookie);                       
+                        Session["Usuario"] = login.Usuario;                        
                         return View("Menuprincipal");
                     } else
                     {
@@ -58,6 +60,6 @@ namespace FE_QUEJAS.Controllers
 
         }
 
-       
+        
     }
 }
