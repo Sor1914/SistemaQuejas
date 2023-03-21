@@ -7,16 +7,10 @@ using System.Web.Mvc;
 namespace FE_QUEJAS.Controllers
 {
     public class HomeController : Controller
-    {
-        
-        
-        
-
+    {                        
         public ActionResult Index()
         {
             return View();
-
-
         }
 
         [HttpPost]

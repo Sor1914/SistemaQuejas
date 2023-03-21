@@ -52,14 +52,12 @@ namespace FE_QUEJAS.Controllers
             }
             else if (!string.IsNullOrEmpty(btnRegistro))
             {
-                return View("Login");
+                return RedirectToAction("Registro", "Registro");
             } else
             {
                 return View("Login");
             }
 
-        }
-
-        
+        }       
     }
 }

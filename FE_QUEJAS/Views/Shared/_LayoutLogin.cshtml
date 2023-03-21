@@ -20,8 +20,10 @@
         <footer></footer>
     </div>
 
-    @Scripts.Render("~/js")
-    @Scripts.Render("~/jsValidate")
+
+    @Styles.Render("~/Content/css")
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/Scripts/bootstrap.js")
     @RenderSection("scripts", required: false)
 </body>
 </html>

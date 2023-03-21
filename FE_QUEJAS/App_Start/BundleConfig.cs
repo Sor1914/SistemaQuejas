@@ -10,7 +10,15 @@ namespace FE_QUEJAS
             StyleBundle(bundles);
             StyleBundleCss(bundles);
             ScriptBundle(bundles);
-            ScriptBundleValidate(bundles);
+            bundles.Add(new ScriptBundle("~/bundles/jquery").Include(
+    "~/Scripts/jquery-3.3.1.js"));
+
+            bundles.Add(new ScriptBundle("~/bundles/bootstrap").Include(
+                "~/Scripts/bootstrap.bundle.js"));
+
+            bundles.Add(new StyleBundle("~/Content/css").Include(
+                "~/Content/bootstrap.css",
+                "~/Content/site.css"));
         }
 
         public static void StyleBundle(BundleCollection bundles)
@@ -22,12 +30,10 @@ namespace FE_QUEJAS
         public static void ScriptBundle(BundleCollection bundles)
         {
             bundles.Add(new ScriptBundle("~/js")
-                     .Include("~/Scripts/jquery-3.3.1.js"));
-        }
-        public static void ScriptBundleValidate(BundleCollection bundles)
-        {
-            bundles.Add(new ScriptBundle("~/jsValidate")
-                     .Include("~/Scripts/jquery.validate.js").Include("~/Scripts/jquery.validate.unobtrusive.js"));
+                     .Include("~/Scripts/jquery-3.3.1.js")
+                     .Include("~/Scripts/jquery.validate.js")
+                     .Include("~/Scripts/jquery.validate.unobtrusive.js")
+                      );
         }
 
         public static void StyleBundleCss(BundleCollection bundles)
@@ -35,5 +41,7 @@ namespace FE_QUEJAS
             bundles.Add(new StyleBundle("~/cssLocal")
                      .Include("~/Content/Site.css"));
         }
+
+
     }
 }
