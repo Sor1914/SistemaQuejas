@@ -9,16 +9,8 @@ namespace FE_QUEJAS
         {
             StyleBundle(bundles);
             StyleBundleCss(bundles);
-            ScriptBundle(bundles);
-            bundles.Add(new ScriptBundle("~/bundles/jquery").Include(
-    "~/Scripts/jquery-3.3.1.js"));
-
-            bundles.Add(new ScriptBundle("~/bundles/bootstrap").Include(
-                "~/Scripts/bootstrap.bundle.js"));
-
-            bundles.Add(new StyleBundle("~/Content/css").Include(
-                "~/Content/bootstrap.css",
-                "~/Content/site.css"));
+            ScriptBundle(bundles);        
+      
         }
 
         public static void StyleBundle(BundleCollection bundles)
@@ -38,8 +30,10 @@ namespace FE_QUEJAS
 
         public static void StyleBundleCss(BundleCollection bundles)
         {
-            bundles.Add(new StyleBundle("~/cssLocal")
-                     .Include("~/Content/Site.css"));
+            bundles.Add(new StyleBundle("~/css")
+                     .Include("~/Content/Site.css")
+                     .Include("~/Content/bootstrap.css")
+                     .Include("~/fonts/font-awesome.min.css"));
         }
 
 

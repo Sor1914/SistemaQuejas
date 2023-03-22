@@ -17,5 +17,17 @@ namespace FE_QUEJAS
             RouteConfig.RegisterRoutes(RouteTable.Routes);
             BundleConfig.RegisterBundles(BundleTable.Bundles);
         }
+
+        void Session_Start(object sender, EventArgs e)
+        {
+            // Establecer una hora de expiración para la sesión
+            Session["ExpirationTime"] = DateTime.Now.AddMinutes(1);
+        }
+
+        protected void Session_End(object sender, EventArgs e)
+        {
+            // Limpiar la variable Session["usuario"]
+            Session["usuario"] = null;
+        }
     }
 }

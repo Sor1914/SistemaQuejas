@@ -14,37 +14,36 @@ namespace FE_QUEJAS.Models
         [Required(ErrorMessage = "El campo usuario es obligatorio")]
         public string Usuario { get; set; }
         [DisplayName("Contraseña")]
-        [DataType(DataType.Password)]        
+        [DataType(DataType.Password)]
+        [Required]
         public string Password { get; set; }        
         [DataType(DataType.Password)]        
         [Compare("Password", ErrorMessage = "Las contraseñas no coinciden")]
+        [DisplayName("Confirmar Contraseña")]
+        [Required]
         public string ConfirmPassword { get; set; }
-        [DisplayName("Ingrese su Nombre")]
+        [DisplayName("Nombre")]
         [Required]
         public string Nombres { get; set; }
-        [DisplayName("Ingrese sus Apellidos")]
+        [DisplayName("Apellidos")]
         [Required]
         public string Apellidos { get; set; }
-        [DisplayName("Ingrese su Correo Electrónico")]
+        [DisplayName("Correo Electrónico")]
         [Required]
         [DataType(DataType.EmailAddress)]
-        public string Email { get; set; }
-        [DisplayName("Seleccione su fecha de nacimiento")]
-        [Required]
-        [DataType(DataType.DateTime)]
-        public string FechaNacimiento { get; set; }
-        [DisplayName("Ingrese su número de DPI")]
+        public string Email { get; set; }       
+        [DisplayName("Número de DPI")]
         [Required]
         [DataType(DataType.Text)]
         public string CUI { get; set; }
-        [DisplayName("Ingrese su Departamento")]
+        [DisplayName("Departamento")]
         [Required]
         [DataType(DataType.Text)]
         public string Departamento { get; set; }
         public int IdRol { get; set; }
         public int IdCargo { get; set; }
         public int IdPuntoAtencion { get; set; }
-        [DisplayName("Ingrese su número de Cuenta")]
+        [DisplayName("Número de Cuenta")]
         [Required]
         [DataType(DataType.Text)]
         public string NumeroCuenta { get; set; }

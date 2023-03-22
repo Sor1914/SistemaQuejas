@@ -13,13 +13,25 @@ using System.Web.Mvc;
 namespace FE_QUEJAS.Controllers
 {
     public class LoginController : Controller
-    {        
+    {
+        
         clsLoginService _Login = new clsLoginService();
         string LayoutLogin = "~/Views/Shared/_LayoutLogin.cshtml";
+
+        public LoginController()
+        {
+            ViewBag.Layout = LayoutLogin;
+        }
         public ActionResult Login()
         {
             ViewBag.Layout = LayoutLogin;
             return View();
+        }
+
+        public ActionResult LoginWhenRegisterComplete()
+        {
+            mostrarMensaje("Te has registrado correctamente, inicia sesión", 1);
+            return View("Login");
         }
 
         [HttpPost]
@@ -36,8 +48,8 @@ namespace FE_QUEJAS.Controllers
                         var cookie = new HttpCookie("TokenJwt", token);
                         cookie.HttpOnly = true;
                         Response.Cookies.Add(cookie);                       
-                        Session["Usuario"] = login.Usuario;                        
-                        return View("Menuprincipal");
+                        Session["Usuario"] = login.Usuario;
+                        return RedirectToAction("Bienvenida", "MenuPrincipal");
                     } else
                     {
                         ModelState.AddModelError(string.Empty, "Usuario y/o contraseña inválidos");
@@ -58,6 +70,12 @@ namespace FE_QUEJAS.Controllers
                 return View("Login");
             }
 
-        }       
+        }
+        private void mostrarMensaje(string mensaje, int tipo)
+        {
+            ViewBag.Mensaje = mensaje;
+            ViewBag.Tipo = tipo;
+            ViewBag.MostrarModal = true;
+        }
     }
 }

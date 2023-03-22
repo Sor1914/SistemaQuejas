@@ -87,3 +87,4 @@ C:\Quejas\SistemaQuejas\FE_QUEJAS\obj\Debug\FE_QUEJAS.csproj.CoreCompileInputs.c
 C:\Quejas\SistemaQuejas\FE_QUEJAS\obj\Debug\FE_QUEJAS.csproj.CopyComplete
 C:\Quejas\SistemaQuejas\FE_QUEJAS\obj\Debug\FE_QUEJAS.dll
 C:\Quejas\SistemaQuejas\FE_QUEJAS\obj\Debug\FE_QUEJAS.pdb
+C:\Quejas\SistemaQuejas\FE_QUEJAS\obj\Debug\FE_QUEJAS.csprojAssemblyReference.cache

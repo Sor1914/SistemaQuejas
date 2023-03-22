@@ -59,11 +59,6 @@
                                 @Html.ValidationMessageFor(model => model.Email, "", new { @class = "text-danger control-label" })
                             </div>
                             <div class="form-group">
-                                @Html.LabelFor(model => model.FechaNacimiento, htmlAttributes: new { @class = "control-label" })
-                                <input type="text" id="Fecha" name="Fecha" class="form-control" />
-                                @Html.ValidationMessageFor(model => model.FechaNacimiento, "", new { @class = "text-danger control-label" })
-                            </div>
-                            <div class="form-group">
                                 @Html.LabelFor(model => model.CUI, htmlAttributes: new { @class = "control-label" })
                                 @Html.EditorFor(model => model.CUI, new { htmlAttributes = new { @class = "form-control text-center" } })
                                 @Html.ValidationMessageFor(model => model.CUI, "", new { @class = "text-danger control-label" })
@@ -85,11 +80,11 @@
                                 <br />
                             </div>
                             <div class="row">
-                                <input type="submit" name="btnLogin" value="Inicia Sesión" class="btn btn-outline-dark form-control" />
+                                <input type="submit" name="btnRegistro" value="Registrarse" class="btn btn-outline-dark form-control" />
                             </div>
                             <br />
                             <div class="row">
-                                <input type="submit" formnovalidate name="btnRegistro" value="Regístrate" class="btn btn-outline-dark form-control" />
+                                <input type="submit" formnovalidate name="btnRegresar" value="Regresar" class="btn btn-outline-dark form-control" />
                             </div>
                         }
                     </div>
@@ -98,19 +93,74 @@
         </div>
     </div>
 </div>
+<div class="modal" id="modalNotificacion" tabindex="-1">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div id="headerNotificacion" class="modal-header">
+                <h5 class="modal-title text-white">Notificación del sistema</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <p id="mensajeNotificacion"></p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" id="btnCerrarNotificacion" class="btn" data-bs-dismiss="modal" aria-label="Close"><i class="fa fa-minus"></i> Cerrar</button>
+            </div>
+        </div>
+
+    </div>
+</div>
 
 
 
 @section Scripts {
+    @if (ViewBag.MostrarModal != null && ViewBag.MostrarModal)
+    {
+        <script>
+            function mostrarNotificacion(tipo, mensaje) {
+                var claseEnc = definirTipoNotificacion(tipo, "Encabezado");
+                var claseBoton = definirTipoNotificacion(tipo, "Boton");
+                var header = document.getElementById("headerNotificacion");
+                header.className = claseEnc;
+                var btnCerrarNotificacion = document.getElementById("btnCerrarNotificacion");
+                btnCerrarNotificacion.className = claseBoton;
+                var mensajeNotificaion = document.getElementById("mensajeNotificacion");
+                mensajeNotificaion.innerHTML = '<i class="fa fa-comments-o"></i> ' + mensaje;
+                //mensajeNotificaion.textContent = mensaje;
+                var modalNotificacion = new bootstrap.Modal(document.getElementById('modalNotificacion'), {
+                    backdrop: 'static',
+                    keyboard: false
+                });
+                modalNotificacion.show();
+            }
 
-    <script>
-        $(function () {
-            $('#Fecha').datepicker({
-                format: 'yyyy-mm-dd',
-                autoclose: true,
-                todayHighlight: true,
+            function definirTipoNotificacion(tipo, elemento) {
+                if (tipo == 1) {                    
+                    claseEnc = "modal-header bg-success";
+                    claseBoton = "btn btn-outline-success";
+                } else if (tipo == 2) {
+                    claseEnc = "modal-header bg-info";
+                    claseBoton = "btn btn-outline-info";
+                } else if (tipo == 3) {                    
+                    claseEnc = "modal-header bg-danger";
+                    claseBoton = "btn btn-outline-danger";
+                } else if (tipo == 4) {
+                    claseEnc = "modal-header bg-warning";
+                    claseBoton = "btn btn-outline-warning";
+                }
+                if (elemento == "Boton") {
+                    return claseBoton;
+                } else {
+                    return claseEnc;
+                }
+            }
+
+            $(document).ready(function () {
+                var mensaje = "@ViewBag.Mensaje";
+                var tipo = @ViewBag.Tipo;
+                mostrarNotificacion(tipo, mensaje);
             });
-        });
-    </script>
+        </script>
 
+    }
 }
