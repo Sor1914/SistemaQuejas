@@ -8,35 +8,67 @@
     @Styles.Render("~/css")
 </head>
 <body>
-    <div class="navbar navbar-expand-lg navbar-light bg-light">
-        <div class="container-fluid">
-
-            @Html.ActionLink("Inicio", "Index", "Home", null, new { @class = "navbar-brand" })
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-            <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-                    <li class="nav-item">
-                        @Html.ActionLink("Inicio de Sesión", "Login", "Home", null, new { @class = "nav-link active" })
-                    </li>
-                    <li class="nav-item">
-                        @Html.ActionLink("Inicio sss", "Login", "Home", null, new { @class = "nav-link" })
-                    </li>
+    <main>
+        <div id="sidebarMenu" class="d-flex flex-column flex-shrink-0 p-3 text-white bg-dark" style="width: 280px;">
+            <div class="row">
+                <div class="col-9">
+                    <i class=""></i>
+                    <span class="fs-4">Mi Prestamito</span>
+                </div>
+                <div class="col-3" id="contenedorSidebar">
+                    <button class="btn btn-outline-light position-absolute" style="z-index: 1;" type="button" data-toggle="sidebarMenu"><i id="iconoBtnSidebar" class="fa fa-minus"></i></button>
+                </div>
+            </div>
+            <hr>
+            <ul class="nav nav-pills flex-column mb-auto">
+                <li class="nav-item">
+                    <a class="nav-link text-white @if ( ViewBag.PaginaActual == "Bienvenida") { <text>active</text> }"
+                       href='@Url.Action("Bienvenida", "MenuPrincipal")'>
+                        <i class="fa fa-home"></i>
+                        Inicio
+                    </a>
+                </li>
+                @if (ViewBag.Permiso != null)
+                { }
+                <li class="nav-item">
+                    <a class="nav-link text-white @if ( ViewBag.PaginaActual == "PuntoAtencion") { <text>active</text> }"
+                       href='@Url.Action("PuntoAtencion", "MenuPrincipal")'>
+                        <i class="fa fa-map-marker"></i>
+                        Puntos de Atención
+                    </a>
+                </li>
+            </ul>
+            <hr>
+            <div class="dropdown">
+                <a href="#" class="d-flex align-items-center text-white text-decoration-none dropdown-toggle" id="dropdownUser1" data-bs-toggle="dropdown" aria-expanded="false">
+                    <i alt="" width="32" height="32" class="rounded-circle me-2 fa fa-user"></i>
+                    <strong>Perfil</strong>
+                </a>
+                <ul class="dropdown-menu dropdown-menu-dark text-small shadow" aria-labelledby="dropdownUser1">
+                    <li><a class="dropdown-item" href="#">Ajustes</a></li>
+                    <li><a class="dropdown-item" href="#">Perfil</a></li>
+                    <li><hr class="dropdown-divider"></li>
+                    <li><a class="dropdown-item" href="#">Cerrar Sesión</a></li>
                 </ul>
-            </div>            
-        </div>
-    </div>
-    <div class="container body-content">
-        @RenderBody()
-        <hr />
-        <footer>
-            <p>&copy; @DateTime.Now.Year - Banco Mi Prestamito</p>
-        </footer>
-    </div>
+            </div>
 
+        </div>
+        <div  id="cuerpoPagina">            
+        </div>
+        <div class="body-content container-fluid flex-grow-1 ">
+            @RenderBody()
+            <hr />
+            <footer>
+                <p>&copy; @DateTime.Now.Year - Derechos Reservados Mi Prestamito</p>
+            </footer>
+        </div>
+
+        <div class="divider-nav"></div>
+
+    </main>  
     @Scripts.Render("~/js")
-    @Scripts.Render("~/Scripts/bootstrap.js")
+    @Scripts.Render("~/Scripts/bootstrap.bundle.js")
     @RenderSection("scripts", required: false)
 </body>
+
 </html>

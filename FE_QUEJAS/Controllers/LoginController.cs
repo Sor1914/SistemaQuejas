@@ -59,7 +59,7 @@ namespace FE_QUEJAS.Controllers
                 catch (Exception ex)
                 {
                     ModelState.AddModelError(string.Empty, "Usuario y/o contraseña inválidos");
-                    return View();
+                    return View("Login");
                 }
             }
             else if (!string.IsNullOrEmpty(btnRegistro))
