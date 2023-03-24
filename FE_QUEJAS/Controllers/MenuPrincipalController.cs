@@ -16,8 +16,7 @@ namespace FE_QUEJAS.Controllers
         string token="";
 
         public MenuPrincipalController()
-        {
-            if (Request.Cookies["TokenJwt"])
+        {            
             ViewBag.Layout = LayoutMenu;
         }
         // GET: MenuInicial

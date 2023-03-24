@@ -10,7 +10,7 @@
         <div class="card-body">
             <div class="row">
                 <div class="col-md-6 d-grid gap-2 d-flex justify-content-end">
-                   
+
                 </div>
                 <div class="col-md-6 d-grid gap-2 d-flex justify-content-end">
                     <a class="btn btn-outline-dark"
@@ -20,15 +20,28 @@
                     </a>
                 </div>
             </div>
-            <br/>
+            <hr />
+            <br />
             <div class="row">
-                <div class="col-md-6">
-                    @Html.DropDownList("regiones", (List<SelectListItem>)ViewBag.RegionesSelectList, "Seleccionar región")
-                </div>
-                <div class="col-md-6 d-grid gap-2 d-flex justify-content-end">
+                <div class="col-md-5">
                     <div class="input-group mb-3">
-                        <span class="input-group-text bg-dark text-white">Fecha</span>
+                        <div class="input-group mb-3">
+                            <span class="input-group-text bg-dark text-white">Region</span>
+                            @Html.DropDownList("regiones", (List<SelectListItem>)ViewBag.RegionesSelectList, "Seleccionar región", new { @class = "form-select" })                            
+                        </div>
+                    </div>                    
+                </div>
+                <div class="col-md-2">
+
+                </div>
+                <div class="col-md-5  gap-2  justify-content-end">
+                    <div class="input-group mb-3">
+                        <span class="input-group-text bg-dark text-white">Buscar</span>
                         <input type="text" id="" class="form-control" />
+                        <a class="btn btn-outline-dark"
+                           href='@Url.Action("Bienvenida", "MenuPrincipal")'>
+                            <i class="fa fa-search"></i>
+                        </a>
                     </div>
                 </div>
             </div>
