@@ -27,23 +27,95 @@
                     <div class="input-group mb-3">
                         <div class="input-group mb-3">
                             <span class="input-group-text bg-dark text-white">Region</span>
-                            @Html.DropDownList("regiones", (List<SelectListItem>)ViewBag.RegionesSelectList, "Seleccionar región", new { @class = "form-select" })                            
-                        </div>
-                    </div>                    
+                            @Html.DropDownList("regiones", (List<SelectListItem>)ViewBag.RegionesSelectList, "Seleccionar región", new { @class = "form-select", id = "regiones-select", onchange = "updateRegionValue()"})
+</div>
+                    </div>
                 </div>
                 <div class="col-md-2">
 
                 </div>
                 <div class="col-md-5  gap-2  justify-content-end">
                     <div class="input-group mb-3">
-                        <span class="input-group-text bg-dark text-white">Buscar</span>
-                        <input type="text" id="" class="form-control" />
-                        <a class="btn btn-outline-dark"
-                           href='@Url.Action("Bienvenida", "MenuPrincipal")'>
-                            <i class="fa fa-search"></i>
-                        </a>
+                        <span class="input-group-text bg-dark text-white">Nombre</span>
+                        <input type="text" id="txtBusqueda" placeholder="Nombre del punto de atención" class="form-control"  value="@ViewBag.Busqueda" />                                 
+                        @Html.ActionLink(" ", "Paginacion", new { pagina = 1, busqueda="BUSQUEDA_VALUE", idRegion = "REGION_VALUE", tamanoPagina = ViewBag.TamanoPagina }, new { @class = "btn btn-outline-dark fa fa-search my-action-link", onclick = "cargarFiltros()" })                        
                     </div>
                 </div>
+                <hr />
+                <div class="row bottom-100">
+                    <div class="col-3 align-content-center">
+                        @if (ViewBag.TotalPaginas > 1)
+                        {
+                            <div class="input-group" role="group">
+                                <div class="input-group-btn">
+                                    @if (ViewBag.PaginaActualTabla > 1)
+                                    {
+                                        @Html.ActionLink(" ", "Paginacion", new { pagina = 1, busqueda = "BUSQUEDA_VALUE",  idRegion = "REGION_VALUE", tamanoPagina = ViewBag.TamanoPagina }, new { @class = "btn btn-default fa fa-step-backward my-action-link", onclick = "cargarFiltros()" })
+                                        @Html.ActionLink(" ", "Paginacion", new { pagina = ViewBag.PaginaActualTabla - 1, busqueda = "BUSQUEDA_VALUE", idRegion = "REGION_VALUE", tamanoPagina = ViewBag.TamanoPagina }, new { @class = "btn btn-default fa fa-backward my-action-link", onclick = "cargarFiltros()" })
+                                   }
+                                    else
+                                    {
+                                            @Html.ActionLink(" ", "Paginacion", new { pagina = ViewBag.PaginaActualTabla - 1, tamanoPagina = ViewBag.TamanoPagina }, new { @class = "btn btn-default fa fa-step-backward disabled" })
+                                        @Html.ActionLink(" ", "Paginacion", new { pagina = ViewBag.PaginaActualTabla, tamanoPagina = ViewBag.TamanoPagina }, new { @class = "btn btn-default fa fa-backward disabled" })
+
+
+                                    }
+                                    <text class="form text-center">@ViewBag.PaginaActualTabla de @ViewBag.TotalPaginas</text>
+                                    @if (ViewBag.PaginaActualTabla < ViewBag.TotalPaginas)
+                                    {
+                                        @Html.ActionLink(" ", "Paginacion", new { listaObjetos = ViewBag.ListaTotalPuntos, busqueda = "BUSQUEDA_VALUE", idRegion = "REGION_VALUE", pagina = ViewBag.PaginaActualTabla + 1, tamanoPagina = ViewBag.TamanoPagina }, new { @class = "btn btn-default fa fa-forward my-action-link", onclick = "cargarFiltros()" })
+                                        @Html.ActionLink(" ", "Paginacion", new { listaObjetos = ViewBag.ListaTotalPuntos, busqueda = "BUSQUEDA_VALUE", idRegion = "REGION_VALUE", pagina = ViewBag.TotalPaginas, tamanoPagina = ViewBag.TamanoPagina }, new { @class = "btn btn-default fa fa-step-forward my-action-link", onclick = "cargarFiltros()" })
+
+                                   }
+                                    else
+                                    {
+                                        @Html.ActionLink(" ", "Paginacion", new { listaObjetos = ViewBag.ListaTotalPuntos, pagina = ViewBag.PaginaActualTabla + 1, tamanoPagina = ViewBag.TamanoPagina }, new { @class = "btn btn-default fa fa-forward disabled" })
+                                        @Html.ActionLink(" ", "Paginacion", new { listaObjetos = ViewBag.ListaTotalPuntos, pagina = ViewBag.PaginaActualTabla + 1, tamanoPagina = ViewBag.TamanoPagina }, new { @class = "btn btn-default fa fa-step-forward disabled" })
+                                    }
+
+                                </div>
+                            </div>
+                        }
+                    </div>                 
+                </div>
+                <br />
+                <br />                
+                <table class="table table-striped table-bordered table-hover">
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Nombre</th>
+                            <th>Region</th>
+                            <th>Estado</th>
+                            <th style="width:1%;">Editar</th>
+                            <th style="width:1%;">Eliminar</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @if (ViewBag.ListaPuntos == null)
+                        {
+                            <tr>
+                                <td colspan="7">No se encontraron registros.</td>
+                            </tr>
+                        }
+                        else
+                        {
+                            foreach (var Punto in ViewBag.ListaPuntos)
+                            {
+                                <tr>
+                                    <td>@Punto.Id_Punto_Atencion</td>
+                                    <td>@Punto.Nombre_Punto_Atencion</td>
+                                    <td>@Punto.Nombre_Region</td>
+                                    <td>@Punto.Estado</td>
+                                    <td><button class="btn btn-secondary"><i class="fa fa-edit text-white"></i></button></td>
+                                    <td><button class="btn btn-danger"><i class="fa fa-trash text-white"></i></button></td>
+                                </tr>
+                            }
+                        }
+
+                    </tbody>
+                </table>
+
             </div>
         </div>
         <div class="card-footer">
@@ -53,5 +125,36 @@
 </div>
 
 @section Scripts{
+    <script>
+        $(document).ready(function () {
+            // Esperar a que el evento asíncrono termine antes de mostrar los botones de paginación
+            if (eventAsyncronoTerminado) {
+                $("#paginacion").show();
+            }
+        });
 
+        $('#regiones-select').change(function () {
+            var regionId = $(this).val();
+            $.ajax({
+                url: '/MenuPrincipal/CambiarRegion',
+                type: 'POST',
+                data: { regionId: regionId },
+                success: function (result) {
+                    // manejar la respuesta del controlador aquí
+                }
+            });
+        });
+     
+
+        function cargarFiltros() {
+            var regionValue = document.getElementById("regiones-select").value;
+            var actionLinks = document.querySelectorAll(".my-action-link");
+            var txtBusqueda = document.getElementById("txtBusqueda").value;
+            actionLinks.forEach(function (link) {
+                link.href = link.href.replace("REGION_VALUE", regionValue);                
+                link.href = link.href.replace("BUSQUEDA_VALUE", txtBusqueda);
+            });
+            return true;
+        }
+    </script>
 }

@@ -65,19 +65,17 @@ namespace FE_QUEJAS.Services
             return resultadoIngreso;
         }
 
-        public async Task<List<PuntoAtencion>> obtenerPuntosApi(string token)
+        public async Task<List<PuntoAtencion>> obtenerPuntosApi(PuntoAtencion Punto, string token)
         {
             List<PuntoAtencion> objetoRespuesta = new List<PuntoAtencion>();            
             HttpClient httpClient = new HttpClient();
             httpClient.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
-            httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);            
-            HttpResponseMessage respuesta = await httpClient.GetAsync("http://localhost:61342/API/PUNTOSATENCION/ELIMINARPUNTO");
+            httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
+            string json = JsonConvert.SerializeObject(Punto);
+            HttpResponseMessage respuesta = await httpClient.PostAsync("http://localhost:61342/API/PUNTOSATENCION/OBTENERPUNTOS", new StringContent(json, System.Text.Encoding.UTF8, "application/json"));
             string respuestaJson = await respuesta.Content.ReadAsStringAsync();
-
             if (respuesta.StatusCode == HttpStatusCode.Found)            
-                objetoRespuesta = JsonConvert.DeserializeObject<List<PuntoAtencion>>(respuestaJson);            
-            else
-                objetoRespuesta = null;
+                objetoRespuesta = JsonConvert.DeserializeObject<List<PuntoAtencion>>(respuestaJson);                        
             return objetoRespuesta;
         }
 

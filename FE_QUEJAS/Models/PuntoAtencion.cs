@@ -7,10 +7,12 @@ namespace FE_QUEJAS.Models
 {
     public class PuntoAtencion
     {
-        public int Id { get; set; }
-        public string NombrePuntoAtencion { get; set; }
-        public int IdRegion { get; set; }
+        public int Id_Punto_Atencion { get; set; }
+        public string Nombre_Punto_Atencion { get; set; }
+        public int Id_Region { get; set; }
+        public string Nombre_Region { get; set; }
         public string Estado { get; set; }
+        public string busqueda { get; set; }
     }
     public class Regiones
     {

@@ -43,7 +43,7 @@ namespace FE_QUEJAS.Controllers
                 try
                 {
                     token = await _Login.iniciarSesionApi(login);
-                    if (token != "NE")
+                    if (token != "Error")
                     {                        
                         var cookie = new HttpCookie("TokenJwt", token);
                         cookie.HttpOnly = true;
