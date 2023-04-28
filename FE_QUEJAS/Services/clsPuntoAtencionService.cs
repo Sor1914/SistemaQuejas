@@ -14,22 +14,22 @@ namespace FE_QUEJAS.Services
 {
     public class clsPuntoAtencionService
     {
-        public async Task<bool> agregarPuntoApi(PuntoAtencion Punto, string token, int opcion)
-        {
-            bool resultadoIngreso;
-            HttpClient httpClient = new HttpClient();
-            httpClient.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
-            httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);            
-            string json = JsonConvert.SerializeObject(Punto);
-            HttpResponseMessage respuesta = await httpClient.PostAsync("http://localhost:61342/API/PUNTOSATENCION/AGREGARPUNTO", new StringContent(json, System.Text.Encoding.UTF8, "application/json"));
-            string respuestaJson = await respuesta.Content.ReadAsStringAsync();
-            var resultado = JsonConvert.DeserializeObject(respuestaJson);
-            if (respuesta.StatusCode == HttpStatusCode.Created)
-                resultadoIngreso = true;
-            else
-                resultadoIngreso = false;
-            return resultadoIngreso;
-        }
+            public async Task<bool> agregarPuntoApi(PuntoAtencion Punto, string token, string rol)
+            {
+                bool resultadoIngreso;
+                HttpClient httpClient = new HttpClient();
+                httpClient.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+                httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);            
+                string json = JsonConvert.SerializeObject(Punto);
+                HttpResponseMessage respuesta = await httpClient.PostAsync("http://localhost:61342/API/PUNTOSATENCION/AGREGARPUNTO", new StringContent(json, System.Text.Encoding.UTF8, "application/json"));
+                string respuestaJson = await respuesta.Content.ReadAsStringAsync();
+                var resultado = JsonConvert.DeserializeObject(respuestaJson);
+                if (respuesta.StatusCode == HttpStatusCode.Created)
+                    resultadoIngreso = true;
+                else
+                    resultadoIngreso = false;
+                return resultadoIngreso;
+            }
 
         public async Task<bool> editarPuntoApi(PuntoAtencion Punto, string token)
         {
@@ -65,7 +65,7 @@ namespace FE_QUEJAS.Services
             return resultadoIngreso;
         }
 
-        public async Task<List<PuntoAtencion>> obtenerPuntosApi(PuntoAtencion Punto, string token)
+        public async Task<List<PuntoAtencion>> obtenerPuntosApi(PuntoAtencion Punto, string token, string rol)
         {
             List<PuntoAtencion> objetoRespuesta = new List<PuntoAtencion>();            
             HttpClient httpClient = new HttpClient();
@@ -78,6 +78,41 @@ namespace FE_QUEJAS.Services
                 objetoRespuesta = JsonConvert.DeserializeObject<List<PuntoAtencion>>(respuestaJson);                        
             return objetoRespuesta;
         }
+
+        public async Task<int> contarPuntosAtencion(PuntoAtencion Punto, string token)
+        {
+            int cantidad;
+            HttpClient httpClient = new HttpClient();
+            httpClient.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+            httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
+            string json = JsonConvert.SerializeObject(Punto);
+            HttpResponseMessage respuesta = await httpClient.PostAsync("http://localhost:61342/API/PUNTOSATENCION/ContarUsuariosPunto", new StringContent(json, System.Text.Encoding.UTF8, "application/json"));
+            string respuestaJson = await respuesta.Content.ReadAsStringAsync();
+            Punto = JsonConvert.DeserializeObject<PuntoAtencion>(respuestaJson);
+            if (respuesta.StatusCode == HttpStatusCode.Found)
+                cantidad = Punto.cantidadUsuarios;
+            else
+                cantidad = 0;
+            return cantidad;
+        }
+
+        public async Task<bool> inactivarUsuariosPuntoAtencion(PuntoAtencion Punto, string token)
+        {
+            bool resultadoIngreso;
+            HttpClient httpClient = new HttpClient();
+            httpClient.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+            httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
+            string json = JsonConvert.SerializeObject(Punto);
+            HttpResponseMessage respuesta = await httpClient.PostAsync("http://localhost:61342/API/PUNTOSATENCION/InactivarUsuariosPunto", new StringContent(json, System.Text.Encoding.UTF8, "application/json"));
+            string respuestaJson = await respuesta.Content.ReadAsStringAsync();
+            var resultado = JsonConvert.DeserializeObject(respuestaJson);
+            if (respuesta.StatusCode == HttpStatusCode.OK)
+                resultadoIngreso = true;
+            else
+                resultadoIngreso = false;
+            return resultadoIngreso;
+        }
+
 
         public async Task<List<Regiones>> obtenerRegionesApi(string token)
         {

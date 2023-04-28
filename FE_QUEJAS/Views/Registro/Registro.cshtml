@@ -59,18 +59,18 @@
                                 @Html.ValidationMessageFor(model => model.Email, "", new { @class = "text-danger control-label" })
                             </div>
                             <div class="form-group">
-                                @Html.LabelFor(model => model.CUI, htmlAttributes: new { @class = "control-label" })
-                                @Html.EditorFor(model => model.CUI, new { htmlAttributes = new { @class = "form-control text-center" } })
+                                @Html.LabelFor(model => model.CUI, htmlAttributes: new { @class = "control-label" })                                
+                                @Html.EditorFor(model => model.CUI, new { htmlAttributes = new { @class = "form-control text-center", type = "number", oninput = "this.value = this.value.replace(/[eE]/g, '')", pattern = "\\d{0,13}" } })
                                 @Html.ValidationMessageFor(model => model.CUI, "", new { @class = "text-danger control-label" })
                             </div>
                             <div class="form-group">
                                 @Html.LabelFor(model => model.Departamento, htmlAttributes: new { @class = "control-label" })
-                                @Html.EditorFor(model => model.Departamento, new { htmlAttributes = new { @class = "form-control text-center" } })
+                                @Html.DropDownListFor(model => model.Departamento, (List<SelectListItem>)ViewBag.Departamentos, "Seleccionar", new { @class = "form-select text-center" })                              
                                 @Html.ValidationMessageFor(model => model.Departamento, "", new { @class = "text-danger control-label" })
                             </div>
                             <div class="form-group">
                                 @Html.LabelFor(model => model.NumeroCuenta, htmlAttributes: new { @class = "control-label" })
-                                @Html.EditorFor(model => model.NumeroCuenta, new { htmlAttributes = new { @class = "form-control text-center" } })
+                                @Html.EditorFor(model => model.NumeroCuenta, new { htmlAttributes = new { @class = "form-control text-center", type = "number", oninput = "this.value = this.value.replace(/[eE]/g, '')" } })
                                 @Html.ValidationMessageFor(model => model.NumeroCuenta, "", new { @class = "text-danger control-label" })
                             </div>
 

@@ -14,9 +14,9 @@ namespace FE_QUEJAS.Services
     public class clsLoginService
     {
         
-        public async Task<string> iniciarSesionApi(LoginRequest Login)
+        public async Task<LoginRequest> iniciarSesionApi(LoginRequest Login)
         {
-            string token = "NE";
+            Login.Token = "NE";
             HttpClient httpClient = new HttpClient();            
             httpClient.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
             string json = JsonConvert.SerializeObject(Login);
@@ -25,13 +25,9 @@ namespace FE_QUEJAS.Services
             var resultado = JsonConvert.DeserializeObject(respuestaJson);
             if (respuesta.StatusCode == HttpStatusCode.OK)
             {
-                token = resultado.ToString();
+                Login = JsonConvert.DeserializeObject<LoginRequest>(respuestaJson);
             }
-            else
-            {
-                token = "Error";
-            }
-            return token;
+            return Login;
         }      
     }
 }

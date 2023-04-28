@@ -140,9 +140,12 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Models\Mensaje.cs" />
+    <Compile Include="Models\Permisos.cs" />
     <Compile Include="Models\PuntoAtencion.cs" />
     <Compile Include="Models\RegistroRequest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Services\clsEnvioEmail.cs" />
     <Compile Include="Services\clsPuntoAtencionService.cs" />
     <Compile Include="Services\clsRegistroService.cs" />
     <Compile Include="Services\clsLoginService.cs" />
@@ -170,6 +173,7 @@
     <Content Include="fonts\fontawesome-webfont.svg" />
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
+    <Content Include="js\alertaMensaje.js" />
     <Content Include="Scripts\bootstrap.bundle.js" />
     <Content Include="Scripts\bootstrap.bundle.min.js" />
     <Content Include="Scripts\bootstrap.esm.js" />
@@ -232,11 +236,10 @@
     <Content Include="Views\Shared\_LayoutIndex.cshtml" />
     <Content Include="Views\Registro\Registro.cshtml" />
     <Content Include="Views\MenuPrincipal\Bienvenida.cshtml" />
-    <Content Include="Views\MenuPrincipal\PuntoAtencion.cshtml" />
+    <Content Include="Views\PuntoAtencion\PuntoAtencion.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Views\PuntoAtencion\" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

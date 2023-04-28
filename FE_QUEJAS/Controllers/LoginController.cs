@@ -34,6 +34,20 @@ namespace FE_QUEJAS.Controllers
             return View("Login");
         }
 
+        public ActionResult Logout()
+        {
+            HttpCookieCollection cookies = Request.Cookies;
+            foreach (string key in cookies.AllKeys)
+            {
+                HttpCookie cookie = cookies[key];
+                cookie.Expires = DateTime.Now.AddDays(-1);
+                Response.Cookies.Add(cookie);
+            }
+            Session.Clear();
+            Session.Abandon();
+            return View("Login");
+        }
+
         [HttpPost]
         public async Task<ActionResult> iniciarSesion(string btnLogin, string btnRegistro, LoginRequest login)
         {
@@ -42,13 +56,26 @@ namespace FE_QUEJAS.Controllers
             {
                 try
                 {
-                    token = await _Login.iniciarSesionApi(login);
-                    if (token != "Error")
-                    {                        
-                        var cookie = new HttpCookie("TokenJwt", token);
+                    LoginRequest LoginResponse = new LoginRequest();
+                    LoginResponse = await _Login.iniciarSesionApi(login);
+                    if (LoginResponse.Token != "NE")
+                    {
+                        Permisos permiso = LoginResponse.permisos;
+                        var cookie = new HttpCookie("TokenJwt", LoginResponse.Token);
                         cookie.HttpOnly = true;
                         Response.Cookies.Add(cookie);                       
-                        Session["Usuario"] = login.Usuario;
+                        Session["Usuario"] = login.Usuario;                        
+                        Session["PuntoAtencion"] = permiso.CatalogoPuntosAtencion;
+                        Session["Asignacion"] = permiso.AsignacionRechazo;
+                        Session["UsuarioPuntoAtencion"] = permiso.UsuarioPuntoAtencion;
+                        Session["AutoConsulta"] = permiso.AutoConsulta;
+                        Session["IngresoQuejasUsuario"] = permiso.IngresoQuejasUsuario;
+                        Session["IngresoQuejasCliente"] = permiso.IngresoQuejasCliente;
+                        Session["Quejas"] = permiso.CatalogoQuejas;
+                        Session["Reporte"] = permiso.Reporte;
+                        Session["SeguimientoCentralizador"] = permiso.SeguimientoCentralizador;
+                        Session["SeguimientoPuntoAtencion"] = permiso.SeguimientoPuntoAtencion;
+                        Session["Usuarios"] = permiso.Usuarios;
                         return RedirectToAction("Bienvenida", "MenuPrincipal");
                     } else
                     {

@@ -9,7 +9,7 @@
 </head>
 <body>
     <main>
-        <div id="sidebarMenu" class="d-flex flex-column flex-shrink-0 p-3 text-white bg-dark" style="width: 280px;">
+        <div id="sidebarMenu" class="d-flex flex-column flex-shrink-0 p-3 text-white bg-dark overflow-auto" style="height: 100vh; overflow-y: scroll; width: 280px; ">
             <div class="row">
                 <div class="col-9">
                     <i class=""></i>
@@ -28,15 +28,116 @@
                         Inicio
                     </a>
                 </li>
-                @if (ViewBag.Permiso != null)
-                { }
-                <li class="nav-item">
-                    <a class="nav-link text-white @if ( ViewBag.PaginaActual == "PuntoAtencion") { <text>active</text> }"
-                       href='@Url.Action("PuntoAtencion", "MenuPrincipal")'>
-                        <i class="fa fa-map-marker"></i>
-                        Puntos de Atención
-                    </a>
-                </li>
+                @if (Session["PuntoAtencion"].ToString() == "True")
+                {
+                    <li class="nav-item">
+                        <a class="nav-link text-white @if ( ViewBag.PaginaActual == "PuntoAtencion") { <text>active</text> }"
+                           href='@Url.Action("PuntoAtencion", "PuntoAtencion")'>
+                            <i class="fa fa-map-marker"></i>
+                            Puntos de Atención
+                        </a>
+                    </li>
+                }
+                @if (Session["UsuarioPuntoAtencion"].ToString() == "True")
+                {
+                    <li class="nav-item">
+                        <a class="nav-link text-white @if ( ViewBag.PaginaActual == "") { <text>active</text> }"
+                           href='@Url.Action("PuntoAtencion", "PuntoAtencion")'>
+                            <i class="fa fa-user-plus"></i>
+                            Usuarios con PA
+                        </a>
+                    </li>
+                }
+                @if (Session["Asignacion"].ToString() == "True")
+                {
+                    <li class="nav-item">
+                        <a class="nav-link text-white @if ( ViewBag.PaginaActual == "") { <text>active</text> }"
+                           href='@Url.Action("PuntoAtencion", "PuntoAtencion")'>
+                            <i class="fa fa-check"></i>
+                            Asignacion
+                        </a>
+                    </li>
+                }
+                @if (Session["AutoConsulta"].ToString() == "True")
+                {
+                    <li class="nav-item">
+                        <a class="nav-link text-white @if ( ViewBag.PaginaActual == "") { <text>active</text> }"
+                           href='@Url.Action("PuntoAtencion", "PuntoAtencion")'>
+                            <i class="fa fa-search"></i>
+                            Autoconsulta
+                        </a>
+                    </li>
+                }
+                @if (Session["IngresoQuejasUsuario"].ToString() == "True")
+                {
+                    <li class="nav-item">
+                        <a class="nav-link text-white @if ( ViewBag.PaginaActual == "") { <text>active</text> }"
+                           href='@Url.Action("PuntoAtencion", "PuntoAtencion")'>
+                            <i class="fa fa-server"></i>
+                            Ingresar Queja - Usuarios
+                        </a>
+                    </li>
+                }
+                @if (Session["IngresoQuejasCliente"].ToString() == "True")
+                {
+                    <li class="nav-item">
+                        <a class="nav-link text-white @if ( ViewBag.PaginaActual == "") { <text>active</text> }"
+                           href='@Url.Action("PuntoAtencion", "PuntoAtencion")'>
+                            <i class="fa fa-server"></i>
+                            Ingresar Queja
+                        </a>
+                    </li>
+                }
+                @if (Session["Quejas"].ToString() == "True")
+                {
+                    <li class="nav-item">
+                        <a class="nav-link text-white @if ( ViewBag.PaginaActual == "") { <text>active</text> }"
+                           href='@Url.Action("PuntoAtencion", "PuntoAtencion")'>
+                            <i class="fa fa-file-text"></i>
+                            Tipos de Quejas
+                        </a>
+                    </li>
+                }
+                @if (Session["Reporte"].ToString() == "True")
+                {
+                    <li class="nav-item">
+                        <a class="nav-link text-white @if ( ViewBag.PaginaActual == "") { <text>active</text> }"
+                           href='@Url.Action("PuntoAtencion", "PuntoAtencion")'>
+                            <i class="fa fa-file-excel-o"></i>
+                            Reportes
+                        </a>
+                    </li>
+                }
+                @if (Session["SeguimientoCentralizador"].ToString() == "True")
+                {
+                    <li class="nav-item">
+                        <a class="nav-link text-white @if ( ViewBag.PaginaActual == "") { <text>active</text> }"
+                           href='@Url.Action("PuntoAtencion", "PuntoAtencion")'>
+                            <i class="fa fa-history"></i>
+                            Seguimiento - Cent.
+                        </a>
+                    </li>
+                }
+                @if (Session["SeguimientoPuntoAtencion"].ToString() == "True")
+                {
+                    <li class="nav-item">
+                        <a class="nav-link text-white @if ( ViewBag.PaginaActual == "") { <text>active</text> }"
+                           href='@Url.Action("PuntoAtencion", "PuntoAtencion")'>
+                            <i class="fa fa-map-marker"></i>
+                            Seguimiento - PA.
+                        </a>
+                    </li>
+                }
+                @if (Session["Usuarios"].ToString() == "True")
+                {
+                    <li class="nav-item">
+                        <a class="nav-link text-white @if ( ViewBag.PaginaActual == "") { <text>active</text> }"
+                           href='@Url.Action("PuntoAtencion", "PuntoAtencion")'>
+                            <i class="fa fa-users"></i>
+                            Usuarios
+                        </a>
+                    </li>
+                }
             </ul>
             <hr>
             <div class="dropdown">
@@ -48,14 +149,14 @@
                     <li><a class="dropdown-item" href="#">Ajustes</a></li>
                     <li><a class="dropdown-item" href="#">Perfil</a></li>
                     <li><hr class="dropdown-divider"></li>
-                    <li><a class="dropdown-item" href="#">Cerrar Sesión</a></li>
+                    <li><a class="dropdown-item" href='@Url.Action("Logout", "Login")'>Cerrar Sesión</a></li>
                 </ul>
             </div>
 
         </div>
         <div id="cuerpoPagina">
         </div>
-        <div class="body-content container-fluid flex-grow-1" style="height: 100vh; overflow-y: scroll;">
+        <div class="body-content container-fluid flex-grow-1 overflow-auto" style="height: 100vh; overflow-y: scroll;">
             @RenderBody()
             <hr />
             <footer>

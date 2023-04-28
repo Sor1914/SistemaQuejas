@@ -29,13 +29,16 @@ namespace FE_QUEJAS.Models
         [Required]
         public string Apellidos { get; set; }
         [DisplayName("Correo Electrónico")]
-        [Required]
-        [DataType(DataType.EmailAddress)]
+        [Required]        
+        [RegularExpression(@"^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$", ErrorMessage = "Ingrese un correo electrónico válido.")]
         public string Email { get; set; }       
         [DisplayName("Número de DPI")]
         [Required]
-        [DataType(DataType.Text)]
+        [DataType(DataType.PhoneNumber)]
+        [StringLength(13, MinimumLength = 13, ErrorMessage = "El número de DPI debe tener 13 caracteres.")]
+        [MaxLength(13)]
         public string CUI { get; set; }
+          
         [DisplayName("Departamento")]
         [Required]
         [DataType(DataType.Text)]
@@ -54,7 +57,7 @@ namespace FE_QUEJAS.Models
             if (Password != ConfirmPassword)
             {
                 yield return new ValidationResult("Las contraseñas no coinciden", new[] { "ConfirmPassword", "Password" });
-            }
+            }            
         }
     }
 }

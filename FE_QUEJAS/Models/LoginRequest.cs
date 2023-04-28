@@ -16,6 +16,8 @@ namespace FE_QUEJAS.Models
         [DisplayName("Contraseña")]        
         [DataType(DataType.Password)]
         public string Pass { get; set; }
+        public string Token { get; set; }
+        public Permisos permisos { get; set; }
         // [RegularExpression(@"^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,20}$", ErrorMessage = "La contraseña no es segura")]
     }
 
