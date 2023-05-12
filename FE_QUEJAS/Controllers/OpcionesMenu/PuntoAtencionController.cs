@@ -30,6 +30,8 @@ namespace FE_QUEJAS.Controllers.OpcionesMenu
             }
             //Verificar página abierta actualmente
             ViewBag.PaginaActual = ControllerContext.RouteData.Values["action"].ToString();
+            HttpContext.Cache.Remove("listaPuntos");
+            HttpContext.Cache.Remove("listaRegiones");
             return await Paginacion();
         }
 
@@ -199,12 +201,7 @@ namespace FE_QUEJAS.Controllers.OpcionesMenu
                     regionesSelectList.Add(new SelectListItem { Value = region.Id_Region.ToString(), Text = region.Nombre_Region });
             }
             ViewBag.RegionesSelectList = regionesSelectList;
-        }
-
-        public async Task<ActionResult> CambiarRegion(int regionId)
-        {
-            return await Paginacion(regionId);
-        }
+        } 
 
         private void mostrarMensaje(string mensaje, int tipo)
         {

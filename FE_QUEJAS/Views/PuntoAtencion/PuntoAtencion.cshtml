@@ -26,7 +26,7 @@
                     <div class="input-group mb-3">
                         <div class="input-group mb-3">
                             <span class="input-group-text bg-dark text-white">Region</span>
-                            @Html.DropDownList("regiones", (List<SelectListItem>)ViewBag.RegionesSelectList, "Seleccionar región", new { @class = "form-select", id = "regiones-select", onchange = "updateRegionValue()" })
+                            @Html.DropDownList("regiones", (List<SelectListItem>)ViewBag.RegionesSelectList, "Seleccionar región", new { @class = "form-select", id = "regiones-select", onchange = "cargarFiltros()" })
                         </div>
                     </div>
                 </div>
@@ -42,7 +42,7 @@
                 </div>
                 <hr />
                 <div class="row bottom-100">
-                    <div class="col-3 align-content-center">
+                    <div class="col-6 align-content-center">
                         <div class="input-group" role="group">
                             <div class="input-group-btn">
                                 @if (ViewBag.PaginaActualTabla > 1)
@@ -103,7 +103,7 @@
                                 <td>@Punto.NombrePuntoAtencion</td>
                                 <td>@Punto.NombreRegion</td>
                                 <td>@Punto.Estado</td>
-                                @if (Punto.Id != 1)
+                                @if (Punto.Id != 2)
                                 {
                                     <td>
                                         <a href="@Url.Action("mostrarModalEditar", new {id=@Punto.Id, nombrePuntoAtencion=@Punto.NombrePuntoAtencion, idRegion = @Punto.IdRegion })" class="btn btn-secondary">
@@ -209,24 +209,13 @@
 
 @section Scripts{
     <script>
-        $(document).ready(function () {
-            // Esperar a que el evento asíncrono termine antes de mostrar los botones de paginación
-            if (eventAsyncronoTerminado) {
-                $("#paginacion").show();
-            }
-        });
-
-        $('#regiones-select').change(function () {
-            var regionId = $(this).val();
-            $.ajax({
-                url: '/PuntoAtencion/CambiarRegion',
-                type: 'POST',
-                data: { regionId: regionId },
-                success: function (result) {
-                    // manejar la respuesta del controlador aquí
-                }
-            });
-        });
+   
+             $('#regiones-select').change(function () {
+    var regionId = $(this).val();
+    var url = '@Url.Action("Paginacion", "PuntoAtencion", new {idRegion = "REGION_VALUE" })';
+    url = url.replace('REGION_VALUE', regionId);
+    window.location.href = url;
+});
 
 
         function cargarFiltros() {

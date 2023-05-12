@@ -1,4 +1,3 @@
-C:\Quejas\SistemaQuejas\FE_QUEJAS\obj\Debug\FE_QUEJAS.csproj.CoreCompileInputs.cache
 C:\Quejas\SistemaQuejas\FE_QUEJAS\bin\FE_QUEJAS.dll.config
 C:\Quejas\SistemaQuejas\FE_QUEJAS\bin\FE_QUEJAS.dll
 C:\Quejas\SistemaQuejas\FE_QUEJAS\bin\FE_QUEJAS.pdb
@@ -84,6 +83,7 @@ C:\Quejas\SistemaQuejas\FE_QUEJAS\bin\es\System.Web.Razor.resources.dll
 C:\Quejas\SistemaQuejas\FE_QUEJAS\bin\es\System.Web.WebPages.resources.dll
 C:\Quejas\SistemaQuejas\FE_QUEJAS\bin\es\System.Web.WebPages.Deployment.resources.dll
 C:\Quejas\SistemaQuejas\FE_QUEJAS\bin\es\System.Web.WebPages.Razor.resources.dll
+C:\Quejas\SistemaQuejas\FE_QUEJAS\obj\Debug\FE_QUEJAS.csproj.CoreCompileInputs.cache
 C:\Quejas\SistemaQuejas\FE_QUEJAS\obj\Debug\FE_QUEJAS.csproj.CopyComplete
 C:\Quejas\SistemaQuejas\FE_QUEJAS\obj\Debug\FE_QUEJAS.dll
 C:\Quejas\SistemaQuejas\FE_QUEJAS\obj\Debug\FE_QUEJAS.pdb

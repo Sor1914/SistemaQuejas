@@ -135,7 +135,10 @@
     <Compile Include="Controllers\LoginController.cs" />
     <Compile Include="Controllers\MenuPrincipalController.cs" />
     <Compile Include="Controllers\OpcionesMenu\PuntoAtencionController.cs" />
+    <Compile Include="Controllers\OpcionesMenu\TipoQuejaController.cs" />
+    <Compile Include="Controllers\OpcionesMenu\UsuarioPuntoAtencionController.cs" />
     <Compile Include="Controllers\RegistroController.cs" />
+    <Compile Include="Models\Cargos.cs" />
     <Compile Include="Models\LoginRequest.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -144,11 +147,15 @@
     <Compile Include="Models\Permisos.cs" />
     <Compile Include="Models\PuntoAtencion.cs" />
     <Compile Include="Models\RegistroRequest.cs" />
+    <Compile Include="Models\TipoQueja.cs" />
+    <Compile Include="Models\UsuarioPuntoAtencion.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Services\clsEnvioEmail.cs" />
     <Compile Include="Services\clsPuntoAtencionService.cs" />
     <Compile Include="Services\clsRegistroService.cs" />
     <Compile Include="Services\clsLoginService.cs" />
+    <Compile Include="Services\clsTipoQuejaService.cs" />
+    <Compile Include="Services\clsUsuarioPuntoAtencionService.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\bootstrap-grid.css" />
@@ -237,6 +244,10 @@
     <Content Include="Views\Registro\Registro.cshtml" />
     <Content Include="Views\MenuPrincipal\Bienvenida.cshtml" />
     <Content Include="Views\PuntoAtencion\PuntoAtencion.cshtml" />
+    <Content Include="Views\UsuarioPuntoAtencion\UsuarioPuntoAtencion.cshtml" />
+    <Content Include="Views\UsuarioPuntoAtencion\_TablaUsuarios.cshtml" />
+    <Content Include="Views\TipoQueja\TipoQueja.cshtml" />
+    <Content Include="Views\TipoQueja\_TablaQuejas.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
