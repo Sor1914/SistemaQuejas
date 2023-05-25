@@ -39,7 +39,7 @@ namespace FE_QUEJAS.Controllers.OpcionesMenu
 
  
 
-        public async Task<ActionResult> Paginacion(int idRegion = 0, int idPuntoAtencion = 0, int pagina = 1, int tamanoPagina = 1, string busqueda = "")
+        public async Task<ActionResult> Paginacion(int idRegion = 0, int idPuntoAtencion = 0, int pagina = 1, int tamanoPagina = 5, string busqueda = "")
         {
             ViewBag.PaginaActual = ControllerContext.RouteData.Values["action"].ToString();
             token = Request.Cookies["TokenJwt"]?.Value;

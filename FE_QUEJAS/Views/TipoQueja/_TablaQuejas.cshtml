@@ -50,10 +50,12 @@
         {
             foreach (var fila in ViewBag.ListaTipos)
             {
-                <tr>
-                    <td>@fila.Id_Tipo</td>
-                    <td>@fila.Siglas_Tipo</td>
-                    <td>@fila.Nombre</td>
+            <tr>
+                <td>@fila.Id_Tipo</td>
+                <td>@fila.Siglas_Tipo</td>
+                <td>@fila.Nombre</td>
+                @if (@fila.Id_Tipo != 1)
+                {
                     <td>
                         <a href="@Url.Action("mostrarModalEditar", new {Id_Tipo = @fila.Id_Tipo, Nombre = @fila.Nombre, Siglas_Tipo = @fila.Siglas_Tipo})" class="btn btn-secondary">
                             <i class="fa fa-edit text-white"></i>
@@ -64,7 +66,15 @@
                             <i class="fa fa-trash text-white"></i>
                         </a>
                     </td>
-                </tr>
+                }
+                else
+                {
+                    <td>                       
+                    </td>
+                    <td>                        
+                    </td>
+                }
+            </tr>
             }
         }
     </tbody>

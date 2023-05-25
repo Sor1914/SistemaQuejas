@@ -121,8 +121,8 @@ namespace FE_QUEJAS.Controllers.OpcionesMenu
                 ListaTipos = HttpContext.Cache["listaTipos"] as List<TipoQueja>;
             else
             {
-                ListaTipos = await _TipoQueja.obtenerTiposQueja(token);
-                HttpContext.Cache.Insert("listaTipos", ListaTipos, null, DateTime.Now.AddMinutes(30), Cache.NoSlidingExpiration);
+                ListaTipos = await _TipoQueja.obtenerTiposQueja(token);                
+                HttpContext.Cache.Insert("listaTipos", ListaTipos, null, DateTime.Now.AddMinutes(30), Cache.NoSlidingExpiration);                             
             }
             if (busqueda != "")
                 ListaTiposFiltro = ListaTipos.Where(p => p.Siglas_Tipo.ToUpper().Trim().Contains(busqueda.ToUpper().Trim())).ToList();

@@ -49,6 +49,9 @@
     <Reference Include="Newtonsoft.Json, Version=13.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
       <HintPath>..\packages\Newtonsoft.Json.13.0.3\lib\net45\Newtonsoft.Json.dll</HintPath>
     </Reference>
+    <Reference Include="Recaptcha.Web, Version=3.1.0.0, Culture=neutral, PublicKeyToken=c11b6c0ad947566e, processorArchitecture=MSIL">
+      <HintPath>..\packages\RecaptchaNet.3.1.0\lib\net45\Recaptcha.Web.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Drawing" />
@@ -63,11 +66,29 @@
     <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Core" />
     <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="System.Web.Helpers, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.WebPages.3.2.7\lib\net45\System.Web.Helpers.dll</HintPath>
+    </Reference>
     <Reference Include="System.Web.Http, Version=5.2.9.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.AspNet.WebApi.Core.5.2.9\lib\net45\System.Web.Http.dll</HintPath>
     </Reference>
     <Reference Include="System.Web.Http.WebHost, Version=5.2.4.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.AspNet.WebApi.WebHost.5.2.4\lib\net45\System.Web.Http.WebHost.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.Mvc, Version=5.2.7.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.Mvc.5.2.7\lib\net45\System.Web.Mvc.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.Razor, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.Razor.3.2.7\lib\net45\System.Web.Razor.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.WebPages, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.WebPages.3.2.7\lib\net45\System.Web.WebPages.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.WebPages.Deployment, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.WebPages.3.2.7\lib\net45\System.Web.WebPages.Deployment.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.WebPages.Razor, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.WebPages.3.2.7\lib\net45\System.Web.WebPages.Razor.dll</HintPath>
     </Reference>
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Web" />
@@ -86,32 +107,8 @@
     </Reference>
     <Reference Include="System.Net.Http.WebRequest">
     </Reference>
-    <Reference Include="System.Web.Helpers, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
-      <Private>True</Private>
-      <HintPath>..\packages\Microsoft.AspNet.WebPages.3.2.4\lib\net45\System.Web.Helpers.dll</HintPath>
-    </Reference>
-    <Reference Include="System.Web.Mvc, Version=5.2.4.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
-      <Private>True</Private>
-      <HintPath>..\packages\Microsoft.AspNet.Mvc.5.2.4\lib\net45\System.Web.Mvc.dll</HintPath>
-    </Reference>
     <Reference Include="System.Web.Optimization">
       <HintPath>..\packages\Microsoft.AspNet.Web.Optimization.1.1.3\lib\net40\System.Web.Optimization.dll</HintPath>
-    </Reference>
-    <Reference Include="System.Web.Razor, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
-      <Private>True</Private>
-      <HintPath>..\packages\Microsoft.AspNet.Razor.3.2.4\lib\net45\System.Web.Razor.dll</HintPath>
-    </Reference>
-    <Reference Include="System.Web.WebPages, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
-      <Private>True</Private>
-      <HintPath>..\packages\Microsoft.AspNet.WebPages.3.2.4\lib\net45\System.Web.WebPages.dll</HintPath>
-    </Reference>
-    <Reference Include="System.Web.WebPages.Deployment, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
-      <Private>True</Private>
-      <HintPath>..\packages\Microsoft.AspNet.WebPages.3.2.4\lib\net45\System.Web.WebPages.Deployment.dll</HintPath>
-    </Reference>
-    <Reference Include="System.Web.WebPages.Razor, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
-      <Private>True</Private>
-      <HintPath>..\packages\Microsoft.AspNet.WebPages.3.2.4\lib\net45\System.Web.WebPages.Razor.dll</HintPath>
     </Reference>
     <Reference Include="WebGrease">
       <Private>True</Private>
@@ -134,10 +131,14 @@
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\LoginController.cs" />
     <Compile Include="Controllers\MenuPrincipalController.cs" />
+    <Compile Include="Controllers\OpcionesMenu\AsignacionController.cs" />
+    <Compile Include="Controllers\OpcionesMenu\AutoConsultaController.cs" />
+    <Compile Include="Controllers\OpcionesMenu\IngresoQuejaClienteController.cs" />
     <Compile Include="Controllers\OpcionesMenu\PuntoAtencionController.cs" />
     <Compile Include="Controllers\OpcionesMenu\TipoQuejaController.cs" />
     <Compile Include="Controllers\OpcionesMenu\UsuarioPuntoAtencionController.cs" />
     <Compile Include="Controllers\RegistroController.cs" />
+    <Compile Include="Models\Autoconsulta.cs" />
     <Compile Include="Models\Cargos.cs" />
     <Compile Include="Models\LoginRequest.cs" />
     <Compile Include="Global.asax.cs">
@@ -146,14 +147,19 @@
     <Compile Include="Models\Mensaje.cs" />
     <Compile Include="Models\Permisos.cs" />
     <Compile Include="Models\PuntoAtencion.cs" />
+    <Compile Include="Models\Queja.cs" />
     <Compile Include="Models\RegistroRequest.cs" />
+    <Compile Include="Models\Seguimiento.cs" />
     <Compile Include="Models\TipoQueja.cs" />
     <Compile Include="Models\UsuarioPuntoAtencion.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Services\clsAutoConsultaService.cs" />
     <Compile Include="Services\clsEnvioEmail.cs" />
     <Compile Include="Services\clsPuntoAtencionService.cs" />
+    <Compile Include="Services\clsQuejaService.cs" />
     <Compile Include="Services\clsRegistroService.cs" />
     <Compile Include="Services\clsLoginService.cs" />
+    <Compile Include="Services\clsSeguimientoService.cs" />
     <Compile Include="Services\clsTipoQuejaService.cs" />
     <Compile Include="Services\clsUsuarioPuntoAtencionService.cs" />
   </ItemGroup>
@@ -181,6 +187,7 @@
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
     <Content Include="js\alertaMensaje.js" />
+    <Content Include="RecaptchaNet.Readme.txt" />
     <Content Include="Scripts\bootstrap.bundle.js" />
     <Content Include="Scripts\bootstrap.bundle.min.js" />
     <Content Include="Scripts\bootstrap.esm.js" />
@@ -226,7 +233,9 @@
     <Content Include="Scripts\jquery.validate.unobtrusive.min.js" />
     <Content Include="Scripts\modernizr-2.8.3.js" />
     <Content Include="Scripts\sidebars.js" />
-    <Content Include="Web.config" />
+    <Content Include="Web.config">
+      <SubType>Designer</SubType>
+    </Content>
     <Content Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </Content>
@@ -248,6 +257,10 @@
     <Content Include="Views\UsuarioPuntoAtencion\_TablaUsuarios.cshtml" />
     <Content Include="Views\TipoQueja\TipoQueja.cshtml" />
     <Content Include="Views\TipoQueja\_TablaQuejas.cshtml" />
+    <Content Include="Views\IngresoQuejaCliente\IngresoQuejaCliente.cshtml" />
+    <Content Include="Views\Asignacion\Asignacion.cshtml" />
+    <Content Include="Views\Asignacion\_TablaQuejasAsignadas.cshtml" />
+    <Content Include="Views\AutoConsulta\AutoConsulta.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

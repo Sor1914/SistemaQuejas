@@ -58,11 +58,21 @@
                         </a>
                     </li>
                 }
+                @if (Session["IngresoQuejasCliente"].ToString() == "True")
+                {
+                    <li class="nav-item">
+                        <a class="nav-link text-white @if ( ViewBag.PaginaActual == "IngresoQuejaCliente") { <text>active</text> }"
+                           href='@Url.Action("IngresoQuejaCliente", "IngresoQuejaCliente")'>
+                            <i class="fa fa-server"></i>
+                            Ingresar Queja
+                        </a>
+                    </li>
+                }
                 @if (Session["Asignacion"].ToString() == "True")
                 {
                     <li class="nav-item">
-                        <a class="nav-link text-white @if ( ViewBag.PaginaActual == "") { <text>active</text> }"
-                           href='@Url.Action("PuntoAtencion", "PuntoAtencion")'>
+                        <a class="nav-link text-white @if ( ViewBag.PaginaActual == "Asignacion") { <text>active</text> }"
+                           href='@Url.Action("Asignacion", "Asignacion")'>
                             <i class="fa fa-check"></i>
                             Asignacion
                         </a>
@@ -71,13 +81,14 @@
                 @if (Session["AutoConsulta"].ToString() == "True")
                 {
                     <li class="nav-item">
-                        <a class="nav-link text-white @if ( ViewBag.PaginaActual == "") { <text>active</text> }"
-                           href='@Url.Action("PuntoAtencion", "PuntoAtencion")'>
+                        <a class="nav-link text-white @if ( ViewBag.PaginaActual == "AutoConsulta") { <text>active</text> }"
+                           href='@Url.Action("AutoConsulta", "AutoConsulta")'>
                             <i class="fa fa-search"></i>
                             Autoconsulta
                         </a>
                     </li>
                 }
+
                 @if (Session["IngresoQuejasUsuario"].ToString() == "True")
                 {
                     <li class="nav-item">
@@ -85,16 +96,6 @@
                            href='@Url.Action("PuntoAtencion", "PuntoAtencion")'>
                             <i class="fa fa-server"></i>
                             Ingresar Queja - Usuarios
-                        </a>
-                    </li>
-                }
-                @if (Session["IngresoQuejasCliente"].ToString() == "True")
-                {
-                    <li class="nav-item">
-                        <a class="nav-link text-white @if ( ViewBag.PaginaActual == "") { <text>active</text> }"
-                           href='@Url.Action("PuntoAtencion", "PuntoAtencion")'>
-                            <i class="fa fa-server"></i>
-                            Ingresar Queja
                         </a>
                     </li>
                 }
