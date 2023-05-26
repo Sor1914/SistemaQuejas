@@ -22,11 +22,33 @@ namespace FE_QUEJAS.Services
             HttpResponseMessage respuesta = await httpClient.GetAsync("http://localhost:61342/API/SEGUIMIENTO/ObtenerQuejasAsignacion");
             string respuestaJson = await respuesta.Content.ReadAsStringAsync();
             if (respuesta.StatusCode == HttpStatusCode.Found)
-            {
-                objetoRespuesta = JsonConvert.DeserializeObject<List<EncabezadoQueja>>(respuestaJson);                
-            }                
-            else
-                objetoRespuesta = null;
+                objetoRespuesta = JsonConvert.DeserializeObject<List<EncabezadoQueja>>(respuestaJson);
+            return objetoRespuesta;
+        }
+
+        public async Task<List<EncabezadoQueja>> obtenerQuejasPA(string token)
+        {
+            List<EncabezadoQueja> objetoRespuesta = new List<EncabezadoQueja>();
+            HttpClient httpClient = new HttpClient();
+            httpClient.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+            httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
+            HttpResponseMessage respuesta = await httpClient.GetAsync("http://localhost:61342/API/SEGUIMIENTO/ObtenerQuejasPA");
+            string respuestaJson = await respuesta.Content.ReadAsStringAsync();
+            if (respuesta.StatusCode == HttpStatusCode.Found)        
+                objetoRespuesta = JsonConvert.DeserializeObject<List<EncabezadoQueja>>(respuestaJson);        
+            return objetoRespuesta;
+        }
+
+        public async Task<List<EncabezadoQueja>> obtenerQuejasCent(string token)
+        {
+            List<EncabezadoQueja> objetoRespuesta = new List<EncabezadoQueja>();
+            HttpClient httpClient = new HttpClient();
+            httpClient.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+            httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
+            HttpResponseMessage respuesta = await httpClient.GetAsync("http://localhost:61342/API/SEGUIMIENTO/ObtenerQuejasCent");
+            string respuestaJson = await respuesta.Content.ReadAsStringAsync();
+            if (respuesta.StatusCode == HttpStatusCode.Found)
+                objetoRespuesta = JsonConvert.DeserializeObject<List<EncabezadoQueja>>(respuestaJson);
             return objetoRespuesta;
         }
 
@@ -92,7 +114,7 @@ namespace FE_QUEJAS.Services
                             FileName = detalle.ArchivoAdjunto.FileName,
                         };
                         formData.Add(archivoAdjuntoContent);
-                    }                        
+                    }
                     HttpResponseMessage respuesta = await httpClient.PostAsync("http://localhost:61342/API/SEGUIMIENTO/InsertarDetalleQueja", formData);
                     string respuestaJson = await respuesta.Content.ReadAsStringAsync();
                     if (respuesta.StatusCode == HttpStatusCode.OK)

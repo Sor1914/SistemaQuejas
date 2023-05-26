@@ -78,6 +78,26 @@
                         </a>
                     </li>
                 }
+                @if (Session["SeguimientoPuntoAtencion"].ToString() == "True")
+                {
+                    <li class="nav-item">
+                        <a class="nav-link text-white @if ( ViewBag.PaginaActual == "SeguimientoPA") { <text>active</text> }"
+                           href='@Url.Action("SeguimientoPA", "SeguimientoPA")'>
+                            <i class="fa fa-map-marker"></i>
+                            Seguimiento - PA.
+                        </a>
+                    </li>
+                }
+                @if (Session["SeguimientoCentralizador"].ToString() == "True")
+                {
+                    <li class="nav-item">
+                        <a class="nav-link text-white @if ( ViewBag.PaginaActual == "SeguimientoCent") { <text>active</text> }"
+                           href='@Url.Action("SeguimientoCent", "SeguimientoCent")'>
+                            <i class="fa fa-history"></i>
+                            Seguimiento - Cent.
+                        </a>
+                    </li>
+                }
                 @if (Session["AutoConsulta"].ToString() == "True")
                 {
                     <li class="nav-item">
@@ -88,52 +108,21 @@
                         </a>
                     </li>
                 }
-
-                @if (Session["IngresoQuejasUsuario"].ToString() == "True")
-                {
-                    <li class="nav-item">
-                        <a class="nav-link text-white @if ( ViewBag.PaginaActual == "") { <text>active</text> }"
-                           href='@Url.Action("PuntoAtencion", "PuntoAtencion")'>
-                            <i class="fa fa-server"></i>
-                            Ingresar Queja - Usuarios
-                        </a>
-                    </li>
-                }
                 @if (Session["Reporte"].ToString() == "True")
                 {
                     <li class="nav-item">
-                        <a class="nav-link text-white @if ( ViewBag.PaginaActual == "") { <text>active</text> }"
-                           href='@Url.Action("PuntoAtencion", "PuntoAtencion")'>
+                        <a class="nav-link text-white @if ( ViewBag.PaginaActual == "Reportes") { <text>active</text> }"
+                           href='@Url.Action("Reportes", "Reportes")'>
                             <i class="fa fa-file-excel-o"></i>
                             Reportes
                         </a>
                     </li>
-                }
-                @if (Session["SeguimientoCentralizador"].ToString() == "True")
-                {
-                    <li class="nav-item">
-                        <a class="nav-link text-white @if ( ViewBag.PaginaActual == "") { <text>active</text> }"
-                           href='@Url.Action("PuntoAtencion", "PuntoAtencion")'>
-                            <i class="fa fa-history"></i>
-                            Seguimiento - Cent.
-                        </a>
-                    </li>
-                }
-                @if (Session["SeguimientoPuntoAtencion"].ToString() == "True")
-                {
-                    <li class="nav-item">
-                        <a class="nav-link text-white @if ( ViewBag.PaginaActual == "") { <text>active</text> }"
-                           href='@Url.Action("PuntoAtencion", "PuntoAtencion")'>
-                            <i class="fa fa-map-marker"></i>
-                            Seguimiento - PA.
-                        </a>
-                    </li>
-                }
+                }             
                 @if (Session["Usuarios"].ToString() == "True")
                 {
                     <li class="nav-item">
-                        <a class="nav-link text-white @if ( ViewBag.PaginaActual == "") { <text>active</text> }"
-                           href='@Url.Action("PuntoAtencion", "PuntoAtencion")'>
+                        <a class="nav-link text-white @if ( ViewBag.PaginaActual == "Usuarios") { <text>active</text> }"
+                           href='@Url.Action("Usuarios", "Usuarios")'>
                             <i class="fa fa-users"></i>
                             Usuarios
                         </a>

@@ -30,6 +30,7 @@ namespace FE_QUEJAS.Models
         public string Estado_Interno { get; set; }
         [Required]
         public string Justificacion { get; set; }
+        [Required]
         public string Respuesta { get; set; }
         public int Id_Detalle { get; set; }     
         [Required]

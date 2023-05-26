@@ -109,14 +109,14 @@ namespace FE_QUEJAS.Controllers.OpcionesMenu
         }
 
         public async Task<ActionResult> mostrarModalDetalle(int idEncabezado)
-        {            
+        {
             ViewBag.MostrarModalDetalle = true;
             ViewBag.IdEncabezado = idEncabezado;
             return await Asignacion(false);
         }
 
-        
-   
+
+
         public async Task<ActionResult> mostrarModalAsignar(int idEncabezado)
         {
             ViewBag.MostrarModalAsignar = true;
@@ -145,12 +145,12 @@ namespace FE_QUEJAS.Controllers.OpcionesMenu
                     string htmlExterno = crearHtmlAsignacionExterno(listEncabezado[0].Correlativo);
                     string[] correosExternos = new string[1];
                     correosExternos[0] = listEncabezado[0].Email;
-                    if(correosExternos.Count()>0)
+                    if (correosExternos.Count() > 0)
                         _Email.enviarCorreo(correosExternos, "Queja Asignada - " + encabezado.Correlativo, htmlExterno);
                     mostrarMensaje("La información se almacenó correctamente", 1);
-                }                                    
-                else                
-                    mostrarMensaje("Hubo un error al guardar la información", 3);                
+                }
+                else
+                    mostrarMensaje("Hubo un error al guardar la información", 3);
                 return await Asignacion(true);
             }
             catch (Exception ex)
@@ -171,11 +171,11 @@ namespace FE_QUEJAS.Controllers.OpcionesMenu
         {
             try
             {
-                
+
                 encabezado.Id_Encabezado = idEncabezado;
                 encabezado.Id_Estado_Externo = 9;
                 encabezado.Id_Estado_Interno = 3;
-                token = Request.Cookies["TokenJwt"]?.Value;                
+                token = Request.Cookies["TokenJwt"]?.Value;
                 string mensajeNotificacion = "";
                 List<EncabezadoQueja> encabezadoQuejaOk = await _Asignacion.actualizarEstadoQueja(encabezado, token);
                 mensajeNotificacion = "La información se almacenó correctamente";
@@ -186,7 +186,7 @@ namespace FE_QUEJAS.Controllers.OpcionesMenu
                     correo[0] = encabezadoQuejaOk[0].Email;
                     _Email.enviarCorreo(correo, "Queja Rechazada - " + encabezadoQuejaOk[0].Correlativo, html);
                     mostrarMensaje(mensajeNotificacion, 1);
-                }                    
+                }
                 else
                     mostrarMensaje("Hubo un error al guardar la información", 3);
                 return await Asignacion(true);
@@ -286,11 +286,11 @@ namespace FE_QUEJAS.Controllers.OpcionesMenu
                 }
                 return await Asignacion(false);
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 mostrarMensaje("Hubo un error al guardar el detalle", 3);
                 return await Asignacion();
-            }            
+            }
         }
 
 
@@ -323,7 +323,7 @@ namespace FE_QUEJAS.Controllers.OpcionesMenu
             ViewBag.MostrarModal = true;
         }
 
-       
+
         public async Task<ActionResult> DescargarArchivoAdjunto(string urlArchivo)
         {
             try

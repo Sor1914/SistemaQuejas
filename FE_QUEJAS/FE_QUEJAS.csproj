@@ -45,12 +45,33 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="BouncyCastle.Crypto, Version=1.8.9.0, Culture=neutral, PublicKeyToken=0e99375e54769942">
+      <HintPath>..\packages\BouncyCastle.1.8.9\lib\BouncyCastle.Crypto.dll</HintPath>
+    </Reference>
+    <Reference Include="ClosedXML, Version=0.64.0.0, Culture=neutral, PublicKeyToken=fd1eb21b62ae805b, processorArchitecture=MSIL">
+      <HintPath>..\packages\ClosedXML.0.64.0\lib\net40-client\ClosedXML.dll</HintPath>
+    </Reference>
+    <Reference Include="DocumentFormat.OpenXml, Version=2.0.5022.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\DocumentFormat.OpenXml.1.0\lib\DocumentFormat.OpenXml.dll</HintPath>
+    </Reference>
+    <Reference Include="itextsharp, Version=5.5.13.3, Culture=neutral, PublicKeyToken=8354ae6d2174ddca, processorArchitecture=MSIL">
+      <HintPath>..\packages\iTextSharp.5.5.13.3\lib\itextsharp.dll</HintPath>
+    </Reference>
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="Newtonsoft.Json, Version=13.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
       <HintPath>..\packages\Newtonsoft.Json.13.0.3\lib\net45\Newtonsoft.Json.dll</HintPath>
     </Reference>
+    <Reference Include="PdfSharp, Version=1.50.5147.0, Culture=neutral, PublicKeyToken=f94615aa0424f9eb, processorArchitecture=MSIL">
+      <HintPath>..\packages\PDFsharp.1.50.5147\lib\net20\PdfSharp.dll</HintPath>
+    </Reference>
+    <Reference Include="PdfSharp.Charting, Version=1.50.5147.0, Culture=neutral, PublicKeyToken=f94615aa0424f9eb, processorArchitecture=MSIL">
+      <HintPath>..\packages\PDFsharp.1.50.5147\lib\net20\PdfSharp.Charting.dll</HintPath>
+    </Reference>
     <Reference Include="Recaptcha.Web, Version=3.1.0.0, Culture=neutral, PublicKeyToken=c11b6c0ad947566e, processorArchitecture=MSIL">
       <HintPath>..\packages\RecaptchaNet.3.1.0\lib\net45\Recaptcha.Web.dll</HintPath>
+    </Reference>
+    <Reference Include="Select.HtmlToPdf, Version=22.2.0.0, Culture=neutral, PublicKeyToken=e0ae9f6e27a97018, processorArchitecture=MSIL">
+      <HintPath>..\packages\Select.HtmlToPdf.22.2.0\lib\net40\Select.HtmlToPdf.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
@@ -131,12 +152,16 @@
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\LoginController.cs" />
     <Compile Include="Controllers\MenuPrincipalController.cs" />
+    <Compile Include="Controllers\OpcionesMenu\ReportesController.cs" />
+    <Compile Include="Controllers\OpcionesMenu\SeguimientoCentController.cs" />
+    <Compile Include="Controllers\OpcionesMenu\SeguimientoPAController.cs" />
     <Compile Include="Controllers\OpcionesMenu\AsignacionController.cs" />
     <Compile Include="Controllers\OpcionesMenu\AutoConsultaController.cs" />
     <Compile Include="Controllers\OpcionesMenu\IngresoQuejaClienteController.cs" />
     <Compile Include="Controllers\OpcionesMenu\PuntoAtencionController.cs" />
     <Compile Include="Controllers\OpcionesMenu\TipoQuejaController.cs" />
     <Compile Include="Controllers\OpcionesMenu\UsuarioPuntoAtencionController.cs" />
+    <Compile Include="Controllers\OpcionesMenu\UsuariosController.cs" />
     <Compile Include="Controllers\RegistroController.cs" />
     <Compile Include="Models\Autoconsulta.cs" />
     <Compile Include="Models\Cargos.cs" />
@@ -149,9 +174,11 @@
     <Compile Include="Models\PuntoAtencion.cs" />
     <Compile Include="Models\Queja.cs" />
     <Compile Include="Models\RegistroRequest.cs" />
+    <Compile Include="Models\Reporte.cs" />
     <Compile Include="Models\Seguimiento.cs" />
     <Compile Include="Models\TipoQueja.cs" />
     <Compile Include="Models\UsuarioPuntoAtencion.cs" />
+    <Compile Include="Models\Usuarios.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Services\clsAutoConsultaService.cs" />
     <Compile Include="Services\clsEnvioEmail.cs" />
@@ -159,9 +186,11 @@
     <Compile Include="Services\clsQuejaService.cs" />
     <Compile Include="Services\clsRegistroService.cs" />
     <Compile Include="Services\clsLoginService.cs" />
+    <Compile Include="Services\clsReporteService.cs" />
     <Compile Include="Services\clsSeguimientoService.cs" />
     <Compile Include="Services\clsTipoQuejaService.cs" />
     <Compile Include="Services\clsUsuarioPuntoAtencionService.cs" />
+    <Compile Include="Services\clsUsuariosService.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\bootstrap-grid.css" />
@@ -261,6 +290,14 @@
     <Content Include="Views\Asignacion\Asignacion.cshtml" />
     <Content Include="Views\Asignacion\_TablaQuejasAsignadas.cshtml" />
     <Content Include="Views\AutoConsulta\AutoConsulta.cshtml" />
+    <Content Include="Views\SeguimientoPA\_TablaQuejasPA.cshtml" />
+    <Content Include="Views\SeguimientoPA\SeguimientoPA.cshtml" />
+    <Content Include="Views\SeguimientoCent\_TablaQuejasCent.cshtml" />
+    <Content Include="Views\SeguimientoCent\SeguimientoCent.cshtml" />
+    <Content Include="Views\Reportes\Reportes.cshtml" />
+    <Content Include="Views\Reportes\_TablaReportes.cshtml" />
+    <Content Include="Views\Usuarios\Usuarios.cshtml" />
+    <Content Include="Views\Usuarios\_Usuarios.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
