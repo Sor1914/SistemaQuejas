@@ -1,0 +1,56 @@
+﻿@{
+    ViewBag.Title = "Inicio";
+}
+<div class="container">
+    <div class="row">
+        <div class="col-12 text-white m-0 row justify-content-center align-items-center" style="font-family: Inter;">
+            <div class="row">
+                <div class="col-12 p-5 text-center">
+                    <h1 class="display-1"> BIENVENIDO </h1>
+                    <p>
+                        Somos un banco líder en la industria financiera, comprometidos con brindar soluciones innovadoras
+                        y personalizadas a nuestros clientes. Con más de XX años de experiencia en el mercado, hemos construido
+                        una sólida reputación basada en la confianza y la calidad de nuestros servicios.
+                    </p>
+                    @using (Html.BeginForm("presionaBotonHome", "Home", FormMethod.Post))
+                    {
+                        <div class="row">
+
+                            <div class="col-4">
+                                <input type="submit" name="btnContacto" value="Adquirir producto" class="btn btn-outline-dark form-control" style="filter:invert(100%);" />
+                            </div>
+                            <div class="col-4">
+                                <input type="submit" name="btnLogin" value="Envíar una Queja" class="btn btn-outline-dark form-control" style="filter:invert(100%);" />
+                            </div>
+                            <div class="col-4">
+                                <input type="submit" name="btnSeguimiento" value="Seguimiento de Quejas" class="btn btn-outline-dark form-control" style="filter:invert(100%);" />
+                            </div>
+
+                        </div>
+                    }
+                </div>
+            </div>
+            <hr />
+            <div class="row">
+                <div class="col-md-6 p-5 text-center">
+                    <h2>Misión</h2>
+                    <p1>
+                        Nuestra misión es proporcionar soluciones financieras innovadoras y personalizadas para ayudar a nuestros
+                        clientes a alcanzar sus objetivos y mejorar su calidad de vida. Nos esforzamos por brindar servicios de alta
+                        calidad y mantener una relación de confianza y transparencia con nuestros clientes, empleados y la comunidad en general.
+                    </p1>
+                </div>
+                <div class="col-md-6 p-5 text-center">
+                    <h2>Visión</h2>
+                    <p1>
+                        Ser el banco líder en la industria financiera, reconocido por nuestro compromiso con la excelencia, la innovación
+                        y la responsabilidad social. Buscamos ser un socio financiero confiable y valioso para nuestros clientes, y una empresa
+                        en la que nuestros empleados se sientan orgullosos de trabajar. Nuestro objetivo es ser una institución financieramente
+                        sólida, sostenible y orientada al futuro, que contribuya al desarrollo económico y social de las comunidades a las que servimos.
+                    </p1>
+                </div>
+            </div>
+            <hr />
+        </div>
+    </div>
+</div>

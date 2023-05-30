@@ -1,0 +1,131 @@
+﻿@model FE_QUEJAS.Models.LoginRequest
+
+@{
+    ViewBag.Title = "Inicio de Sesión";
+    Layout = ViewBag.Layout;
+}
+
+
+@Html.AntiForgeryToken()
+
+<div class="container">
+    <div class="card">
+        <div class="card-body sombras col-auto" style="padding: 0px;">
+            <div class="row">
+                <div class="col-6 bg-black m-0 row justify-content-center align-items-center">
+                    <div class="col-auto p-5 text-white text-center">
+                        <p class="h10 text-white">Es un gusto saludarte</p>
+                        <p class="h3 text-white">Bienvenido De Nuevo</p>
+                        <p class="h1">-</p>
+                        <p class="h15">Lorem ipsumLorem ipsumLorem ipsumLorem ipsumLorem ipsumLorem ipsumLorem ipsum</p>
+                    </div>
+                </div>
+                <div class="col-6 m-0 row justify-content-center align-items-center">
+                    <div class="col-8 p-5 text-center">
+
+                        @using (Html.BeginForm("iniciarSesion", "Login", FormMethod.Post))
+                        {
+                            <p class="h10 text-black">Login</p>
+                            <p class="h3 text-black">Ingresa tus Datos</p>
+                            <p class="h1">-</p>
+                            <div class="form-group">
+                                @Html.LabelFor(model => model.Usuario, htmlAttributes: new { @class = "control-label" })
+                                @Html.EditorFor(model => model.Usuario, new { htmlAttributes = new { @class = "form-control text-center" } })
+                                @Html.ValidationMessageFor(model => model.Usuario, "", new { @class = "text-danger control-label" })
+
+                            </div>
+                            <div class="form-group">
+                                @Html.LabelFor(model => model.Pass, htmlAttributes: new { @class = "control-label" })
+                                @Html.EditorFor(model => model.Pass, new { htmlAttributes = new { @class = "form-control text-center" } })
+                                @Html.ValidationMessageFor(model => model.Pass, "", new { @class = "text-danger control-label" })
+                            </div>
+
+                            @Html.ValidationSummary(true, "", new { @class = "text-danger control-label" })
+
+                            <div class="row">
+                                <br />
+                            </div>
+                            <div class="row">
+                                <input type="submit" name="btnLogin" value="Inicia Sesión" class="btn btn-outline-dark form-control" />
+                            </div>
+                            <br />
+                            <div class="row">
+                                <input type="submit" formnovalidate name="btnRegistro" value="Regístrate" class="btn btn-outline-dark form-control" />
+                            </div>
+                        }
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal" id="modalNotificacion" tabindex="-1">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div id="headerNotificacion" class="modal-header">
+                <h5 class="modal-title text-white">Notificación del sistema</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <p id="mensajeNotificacion"></p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" id="btnCerrarNotificacion" class="btn" data-bs-dismiss="modal" aria-label="Close"><i class="fa fa-minus"></i> Cerrar</button>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+
+@section Scripts {
+    @if (ViewBag.MostrarModal != null && ViewBag.MostrarModal)
+    {
+        <script>
+            function mostrarNotificacion(tipo, mensaje) {
+                var claseEnc = definirTipoNotificacion(tipo, "Encabezado");
+                var claseBoton = definirTipoNotificacion(tipo, "Boton");
+                var header = document.getElementById("headerNotificacion");
+                header.className = claseEnc;
+                var btnCerrarNotificacion = document.getElementById("btnCerrarNotificacion");
+                btnCerrarNotificacion.className = claseBoton;
+                var mensajeNotificaion = document.getElementById("mensajeNotificacion");
+                mensajeNotificaion.innerHTML = '<i class="fa fa-comments-o"></i> ' + mensaje;
+                //mensajeNotificaion.textContent = mensaje;
+                var modalNotificacion = new bootstrap.Modal(document.getElementById('modalNotificacion'), {
+                    backdrop: 'static',
+                    keyboard: false
+                });
+                modalNotificacion.show();
+            }
+
+            function definirTipoNotificacion(tipo, elemento) {
+                if (tipo == 1) {
+                    claseEnc = "modal-header bg-black";
+                    claseBoton = "btn btn-outline-dark";
+                } else if (tipo == 2) {
+                    claseEnc = "modal-header bg-info";
+                    claseBoton = "btn btn-outline-info";
+                } else if (tipo == 3) {
+                    claseEnc = "modal-header bg-danger";
+                    claseBoton = "btn btn-outline-danger";
+                } else if (tipo == 4) {
+                    claseEnc = "modal-header bg-warning";
+                    claseBoton = "btn btn-outline-warning";
+                }
+                if (elemento == "Boton") {
+                    return claseBoton;
+                } else {
+                    return claseEnc;
+                }
+            }
+
+            $(document).ready(function () {
+                var mensaje = "@ViewBag.Mensaje";
+                var tipo = @ViewBag.Tipo;
+                mostrarNotificacion(tipo, mensaje);
+            });
+        </script>
+
+    }
+}

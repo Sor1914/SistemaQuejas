@@ -19,7 +19,7 @@ namespace FE_QUEJAS.Services
             HttpClient httpClient = new HttpClient();
             httpClient.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
             string json = JsonConvert.SerializeObject(registro);
-            HttpResponseMessage respuesta = await httpClient.PostAsync("http://localhost:61342/API/LOGIN/REGISTRAR", new StringContent(json, System.Text.Encoding.UTF8, "application/json"));
+            HttpResponseMessage respuesta = await httpClient.PostAsync("http://20.92.250.90/API_Quejas/API/LOGIN/REGISTRAR", new StringContent(json, System.Text.Encoding.UTF8, "application/json"));
             string respuestaJson = await respuesta.Content.ReadAsStringAsync();                        
             if (respuesta.StatusCode == HttpStatusCode.OK)
                 registrado = "Ok";

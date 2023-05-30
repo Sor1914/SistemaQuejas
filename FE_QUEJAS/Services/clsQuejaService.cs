@@ -20,7 +20,7 @@ namespace FE_QUEJAS.Services
             httpClient.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
             httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
             string json = JsonConvert.SerializeObject(queja);
-            HttpResponseMessage respuesta = await httpClient.PostAsync("http://localhost:61342/API/QUEJA/InsertarTipoQueja", new StringContent(json, System.Text.Encoding.UTF8, "application/json"));
+            HttpResponseMessage respuesta = await httpClient.PostAsync("http://20.92.250.90/API_Quejas/API/QUEJA/InsertarTipoQueja", new StringContent(json, System.Text.Encoding.UTF8, "application/json"));
             string respuestaJson = await respuesta.Content.ReadAsStringAsync();
             if (respuesta.StatusCode == HttpStatusCode.OK)
                 resultadoIngreso = JsonConvert.DeserializeObject<Queja>(respuestaJson);
@@ -54,7 +54,7 @@ namespace FE_QUEJAS.Services
                         };
                         formData.Add(archivoAdjuntoContent);
                     }                                         
-                    HttpResponseMessage respuesta = await httpClient.PostAsync("http://localhost:61342/API/QUEJA/InsertarTipoQueja", formData);
+                    HttpResponseMessage respuesta = await httpClient.PostAsync("http://20.92.250.90/API_Quejas/API/QUEJA/InsertarTipoQueja", formData);
                     string respuestaJson = await respuesta.Content.ReadAsStringAsync();
                     if (respuesta.StatusCode == HttpStatusCode.OK)
                         resultadoIngreso = JsonConvert.DeserializeObject<Queja>(respuestaJson);
@@ -72,7 +72,7 @@ namespace FE_QUEJAS.Services
             HttpClient httpClient = new HttpClient();
             httpClient.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
             httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
-            HttpResponseMessage respuesta = await httpClient.GetAsync("http://localhost:61342/API/QUEJA/ObtenerCorreoCentralizador");
+            HttpResponseMessage respuesta = await httpClient.GetAsync("http://20.92.250.90/API_Quejas/API/QUEJA/ObtenerCorreoCentralizador");
             string respuestaJson = await respuesta.Content.ReadAsStringAsync();
             if (respuesta.StatusCode == HttpStatusCode.Found)
                 objetoRespuesta = JsonConvert.DeserializeObject<List<Emails>>(respuestaJson);

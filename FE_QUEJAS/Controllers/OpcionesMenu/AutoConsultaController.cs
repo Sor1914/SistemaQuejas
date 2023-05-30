@@ -67,16 +67,25 @@ namespace FE_QUEJAS.Controllers.OpcionesMenu
                 Correlativo = datos.Correlativo
             };
             List<EncabezadoQueja> listaEncabezado = await _Seguimiento.obtenerEncabezadoQuejaPorCorrelativo(encabezado, token);
-            if (Session["Usuario"].ToString() == listaEncabezado[0].Usuario)
+           if(listaEncabezado.Count > 0)
             {
-                ViewBag.Estado = listaEncabezado[0].Id_Estado_Externo;
-                ViewBag.FechaCreacion = listaEncabezado[0].Fecha_Ingreso;
-                ViewBag.MostrarModalQueja = true;
-                ViewBag.TituloModal = "Estado de Queja " + listaEncabezado[0].Correlativo;                
+                if (Session["Usuario"].ToString() == listaEncabezado[0].Usuario)
+                {
+                    ViewBag.Estado = listaEncabezado[0].Id_Estado_Externo;
+                    ViewBag.FechaCreacion = listaEncabezado[0].Fecha_Ingreso;
+                    ViewBag.MostrarModalQueja = true;
+                    ViewBag.TituloModal = "Estado de Queja " + listaEncabezado[0].Correlativo;
+                }
+                else
+                {
+                    ModelState.AddModelError("", "Esta queja no existe para el usuario actual.");
+                }
             } else
             {
-                ModelState.AddModelError("", "Esta queja no existe para el usuarioa actual.");
-            }            
+                ModelState.AddModelError("", "Esta queja no existe para el usuario actual.");
+
+            }
+
         }
 
         private async Task llenarTipos()

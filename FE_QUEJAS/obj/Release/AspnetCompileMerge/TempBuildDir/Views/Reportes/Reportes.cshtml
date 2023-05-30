@@ -1,0 +1,108 @@
+﻿@model FE_QUEJAS.Models.Reporte
+
+@{
+    ViewBag.Title = "Reportes";
+    Layout = ViewBag.Layout;
+}
+
+<div class="container" style="margin-top: 15px; margin-bottom: 15px">
+    <div class="card" style="margin-top: 15px">
+        <h5 class="card-header">Reportes</h5>
+        <div class="card-body">
+            @using (Html.BeginForm("BuscarRegistros", "Reportes", FormMethod.Post))
+            {
+                <div class="row">
+                    <div class="row">
+                        <div class="col-12 d-grid gap-2 d-flex">
+                            <div class="col-6">
+                                @Html.LabelFor(model => model.Fecha_Inicial, htmlAttributes: new { @class = "form-label fw-bold" })
+                                @Html.TextBoxFor(model => model.Fecha_Inicial, new { @class = "form-control", type = "date", max = @ViewBag.FechaHoy })
+                            </div>
+                            <div class="col-6">
+                                @Html.LabelFor(model => model.Fecha_Final, htmlAttributes: new { @class = "form-label fw-bold" })
+                                @Html.TextBoxFor(model => model.Fecha_Final, new { @class = "form-control", type = "date", max = @ViewBag.FechaHoy })
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-12 d-grid gap-2 d-flex">
+                            <div class="col-6">
+                                @Html.LabelFor(model => model.Numero_Queja, htmlAttributes: new { @class = "form-label fw-bold" })
+                                @Html.EditorFor(model => model.Numero_Queja, new { htmlAttributes = new { @class = "form-control", id = "txtSiglasQueja" } })
+                            </div>
+                            <div class="col-6">
+                                @Html.LabelFor(model => model.id_Region, htmlAttributes: new { @class = "form-label fw-bold" })
+                                @Html.DropDownListFor(model => model.id_Region, (List<SelectListItem>)ViewBag.RegionesSelectList, "Seleccionar región", new { @class = "form-select", id = "regiones-select-modal", onchange = "actualizarPuntosModal()" })
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-12 d-grid gap-2 d-flex">
+                            <div class="col-6">
+                                @Html.LabelFor(model => model.id_Punto_Atencion, htmlAttributes: new { @class = "form-label fw-bold" })
+                                @Html.DropDownListFor(model => model.id_Punto_Atencion, new List<SelectListItem>(), "Seleccionar punto", new { @class = "form-select", id = "puntos-select-modal" })
+                            </div>
+                            <div class="col-6  d-flex align-items-end">
+                                <button type="submit" class="btn btn-success">
+                                    <i class="fa fa-search"></i> Consultar
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            }
+            <hr />
+            <div class="row">
+                @if (ViewBag.Reportes == "True")
+                {
+                    using (Html.BeginForm("CrearReporte", "Reportes", FormMethod.Post))
+                    {
+
+                        <div class="btn-group col-6" role="group" aria-label="Descargar">
+                            <button type="submit" class="btn btn-secondary rounded-start" name="tipoDescarga" value="PDF">
+                                <i class="fa fa-file-pdf-o"></i> Descargar PDF
+                            </button>
+                            <button type="submit" class="btn btn-dark rounded-end" name="tipoDescarga" value="Excel">
+                                <i class="fa fa-file-excel-o"></i> Descargar Excel
+                            </button>
+                        </div>
+                    }
+                }
+            </div>
+            <br />
+            <div class="row">
+
+                <hr />
+
+                <div id="tablaQuejasAsignadas">
+                    @Html.Partial("_TablaReportes")
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts{
+    <script>
+    function actualizarPuntosModal() {
+            var regionId = $('#regiones-select-modal').val();
+            $.ajax({
+                url: '/Reportes/ObtenerPuntosDeRegion',
+                type: 'GET',
+                data: { IdRegion: regionId },
+                success: function (data) {
+                    // actualizar contenido del segundo dropdown
+                    var dropdownPuntos = $('#puntos-select-modal');
+                    dropdownPuntos.empty();
+                    dropdownPuntos.append('<option value="">Seleccionar punto</option>'); // Agregar opción vacía
+                    $.each(data, function (i, punto) {
+                        dropdownPuntos.append($('<option></option>').val(punto.Value).html(punto.Text));
+                    });
+                dropdownPuntos.val(@ViewBag.IdPuntoModal);
+                }
+            });
+        }
+    </script>
+}

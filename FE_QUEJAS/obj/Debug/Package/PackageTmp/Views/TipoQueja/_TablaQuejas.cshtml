@@ -1,0 +1,124 @@
+﻿<div class="row bottom-100">
+    <div class="col-6 align-content-center">
+        <div class="input-group" role="group">
+            <div class="input-group-btn">
+                @if (ViewBag.PaginaActualTabla > 1)
+                {
+                    <button id="btnInicio" class="btn btn-default fa fa-step-backward"> </button>
+                    <button id="btnAtras" class="btn btn-default fa fa-backward"> </button>
+                }
+                else
+                {
+                    @Html.ActionLink(" ", "Paginacion", new { pagina = ViewBag.PaginaActualTabla - 1, tamanoPagina = ViewBag.TamanoPagina }, new { @class = "btn btn-default fa fa-step-backward disabled" })
+                    @Html.ActionLink(" ", "Paginacion", new { pagina = ViewBag.PaginaActualTabla, tamanoPagina = ViewBag.TamanoPagina }, new { @class = "btn btn-default fa fa-backward disabled" })
+                }
+                <text class="form text-center">@ViewBag.PaginaActualTabla de @ViewBag.TotalPaginas</text>
+                @if (ViewBag.PaginaActualTabla < ViewBag.TotalPaginas)
+                {
+                    <button id="btnSiguiente" class="btn btn-default fa fa-forward"> </button>
+                    <button id="btnFinal" class="btn btn-default fa fa-step-forward"> </button>
+                }
+                else
+                {
+                    @Html.ActionLink(" ", "Paginacion", new { listaObjetos = ViewBag.ListaTotalPuntos, pagina = ViewBag.PaginaActualTabla + 1, tamanoPagina = ViewBag.TamanoPagina }, new { @class = "btn btn-default fa fa-forward disabled" })
+                    @Html.ActionLink(" ", "Paginacion", new { listaObjetos = ViewBag.ListaTotalPuntos, pagina = ViewBag.PaginaActualTabla + 1, tamanoPagina = ViewBag.TamanoPagina }, new { @class = "btn btn-default fa fa-step-forward disabled" })
+                }
+
+            </div>
+        </div>
+    </div>
+</div>
+<br />
+<table class="table table-striped table-bordered table-hover" id="TablaQuejas">
+    <thead>
+        <tr>
+            <th>ID</th>
+            <th>Siglas</th>
+            <th>Nombre</th>
+            <th style="width:1%;">Editar</th>
+            <th style="width:1%;">Eliminar</th>
+        </tr>
+    </thead>
+    <tbody>
+        @if (ViewBag.ListaTipos == null)
+        {
+            <tr>
+                <td colspan="7">No se encontraron registros.</td>
+            </tr>
+        }
+        else
+        {
+            foreach (var fila in ViewBag.ListaTipos)
+            {
+            <tr>
+                <td>@fila.Id_Tipo</td>
+                <td>@fila.Siglas_Tipo</td>
+                <td>@fila.Nombre</td>
+                @if (@fila.Id_Tipo != 1)
+                {
+                    <td>
+                        <a href="@Url.Action("mostrarModalEditar", new {Id_Tipo = @fila.Id_Tipo, Nombre = @fila.Nombre, Siglas_Tipo = @fila.Siglas_Tipo})" class="btn btn-secondary">
+                            <i class="fa fa-edit text-white"></i>
+                        </a>
+                    </td>
+                    <td>
+                        <a href="@Url.Action("notificarEliminacion", new {id = @fila.Id_Tipo})" class="btn btn-danger" )>
+                            <i class="fa fa-trash text-white"></i>
+                        </a>
+                    </td>
+                }
+                else
+                {
+                    <td>                       
+                    </td>
+                    <td>                        
+                    </td>
+                }
+            </tr>
+            }
+        }
+    </tbody>
+</table>
+<script src="/Scripts/jquery-3.3.1.min.js"></script>
+<script>
+    $(document).ready(function () {
+         $('#btnSiguiente').click(function () {
+             paginar(1);
+        });
+     });
+
+    $(document).ready(function () {
+        $('#btnFinal').click(function () {
+            paginar(parseInt("@ViewBag.TotalPaginas") - 1);
+        });
+    });
+
+    $(document).ready(function () {
+        $('#btnAtras').click(function () {
+            paginar(-1);
+        });
+    });
+
+    $(document).ready(function () {
+        $('#btnInicio').click(function () {
+            paginar((parseInt("@ViewBag.PaginaActual") * -1) + 1);
+        });
+    });
+     function paginar(sumar) {
+         var nextPage = parseInt("@ViewBag.PaginaActualTabla") + sumar;
+             var tamanoPagina = "@ViewBag.TamanoPagina";
+             var busqueda = $('#txtBusqueda').val();
+                $.ajax({
+                    url: "/TipoQueja/Paginacion",
+                    type: "GET",
+                    data: { busqueda: busqueda, pagina: nextPage, tamanoPagina: tamanoPagina },
+                    success: function (result) {
+                        $('#tablaQuejas').html(result);
+                    },
+                    error: function (error) {
+                        console.log(error);
+                    }
+                });
+    }
+</script>
+

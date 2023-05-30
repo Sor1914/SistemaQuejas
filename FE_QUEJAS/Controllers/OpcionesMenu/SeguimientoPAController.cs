@@ -344,7 +344,7 @@ namespace FE_QUEJAS.Controllers.OpcionesMenu
                 {
                     httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
                     var contenido = new StringContent("", Encoding.UTF8, "application/json");
-                    HttpResponseMessage respuesta = await httpClient.PostAsync("http://localhost:61342/API/SEGUIMIENTO/DescargarArchivo?direccionArchivo=" + urlArchivo, contenido);
+                    HttpResponseMessage respuesta = await httpClient.PostAsync("http://20.92.250.90/API_Quejas/API/SEGUIMIENTO/DescargarArchivo?direccionArchivo=" + urlArchivo, contenido);
                     if (respuesta.IsSuccessStatusCode)
                     {
                         var archivoBytes = await respuesta.Content.ReadAsByteArrayAsync();

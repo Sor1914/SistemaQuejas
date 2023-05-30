@@ -1,0 +1,352 @@
+﻿@model FE_QUEJAS.Models.UsuarioPuntoAtencion
+
+@{
+    ViewBag.Title = "UsuarioPuntoAtencion";
+    Layout = ViewBag.Layout;
+}
+
+<div class="container" style="margin-top: 15px; margin-bottom: 15px">
+    <div class="card" style="margin-top: 15px">
+        <h5 class="card-header">Usuarios - Puntos de Atención</h5>
+        <div class="card-body">
+            <div class="row">
+                <div class="col-md-6 d-grid gap-2 d-flex justify-content-end">
+
+                </div>
+                <div class="col-md-6 d-grid gap-2 d-flex justify-content-end">
+                    <a href="@Url.Action("mostrarModalNuevo", new { pagina = 1, busqueda = "BUSQUEDA_VALUE", idRegion = "REGION_VALUE", tamanoPagina = ViewBag.TamanoPagina })" class="btn btn-outline-dark my-action-link">
+                        Agregar <i class="fa fa-plus-circle"></i>
+                    </a>
+                </div>
+            </div>
+            <hr />
+            <br />
+            <div class="row">
+                <div class="col-md-5">
+                    <div class="input-group mb-3">
+                        <div class="input-group mb-3">
+                            <span class="input-group-text bg-dark text-white">Region</span>
+                            @Html.DropDownList("regiones", (List<SelectListItem>)ViewBag.RegionesSelectList, "Seleccionar región", new { @class = "form-select", id = "regiones-select", onchange = "actualizarPuntos()" })
+                            <span class="input-group-text bg-dark text-white">Puntos</span>
+                            @Html.DropDownList("puntos", new List<SelectListItem>(), "Seleccionar punto", new { @class = "form-select", id = "puntos-select", onchange = "actualizarTablaUsuarios()" })
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-2">
+
+                </div>
+                <div class="col-md-5  gap-2  justify-content-end">
+                    <div class="input-group mb-3">
+                        <span class="input-group-text bg-dark text-white">CUI</span>
+                        <input type="number" id="txtBusqueda" placeholder="Número de DPI" class="form-control" oninput = "this.value = this.value.replace(/[eE]/g, '')" pattern = "\\d{0,13}"  />
+                        <button id="btnBuscar" class="btn btn-outline-dark fa fa-search my-action-link"></button>
+                    </div>
+                </div>
+                <hr />
+
+                <div id="tablaUsuarios">
+                    @Html.Partial("_TablaUsuarios")
+                </div>
+            </div>
+        </div>
+        <div class="card-footer">
+            <p class="h10">Administración de puntos de atención</p>
+        </div>
+    </div>
+</div>
+<div class="modal fade" id="modalNuevo" tabindex="-1" aria-labelledby="exampleModalLabel">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <asp:UpdatePanel runat="server">
+                    <ContentTemplate>
+                        <input id="modalAccion" value="@ViewBag.ModalAccion" type="hidden" runat="server" />
+                        <h5 class="modal-title" id="modalHeader" runat="server"></h5>
+                    </ContentTemplate>
+                    <h5>@ViewBag.TituloModal</h5>
+                </asp:UpdatePanel>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            @using (Html.BeginForm("guardarUsuarioPuntoAtencion", "UsuarioPuntoAtencion", new { tipo = @ViewBag.ModalAccion }, FormMethod.Post))
+            {
+                <div class="modal-body">
+                    <asp:HiddenField runat="server" ID="hiUsuario" />
+                    <div class="row">
+                        <div class="col-6">
+                            @Html.LabelFor(model => model.Cui, htmlAttributes: new { @class = "form-label fw-bold" })
+                            @if (ViewBag.ModalAccion == "editar")
+                            {
+                                @Html.EditorFor(model => model.Cui, new { htmlAttributes = new { @class = "form-control", id = "txtCuiModal", @readonly = "readonly" } })
+                            }
+                            else
+                            {
+                                @Html.EditorFor(model => model.Cui, new { htmlAttributes = new { @class = "form-control", id = "txtCuiModal", onchange = "obtenerDatosUsuario()" } })
+                            }
+                            <div id="errorCui" class="text-danger"></div>
+                            @Html.ValidationMessageFor(model => model.Cui, "", new { @class = "text-danger control-label" })
+
+                        </div>
+                        <div class="col-6">
+                            @Html.LabelFor(model => model.Nombres, htmlAttributes: new { @class = "form-label fw-bold" })
+                            @Html.EditorFor(model => model.Nombres, new { htmlAttributes = new { @class = "form-control", @disabled = "disabled", id = "txtNombre", required = "required" } })
+                            @Html.ValidationMessageFor(model => model.Nombres, "", new { @class = "text-danger control-label" })
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-6">
+                            @Html.LabelFor(model => model.Email, htmlAttributes: new { @class = "form-label fw-bold" })
+                            @Html.EditorFor(model => model.Email, new { htmlAttributes = new { @class = "form-control", @disabled = "disabled", id = "txtEmailModal", required = "required" } })
+                            @Html.ValidationMessageFor(model => model.Email, "", new { @class = "text-danger control-label" })
+                        </div>
+                        <div class="col-6">
+                            @Html.LabelFor(model => model.Id_Region, htmlAttributes: new { @class = "form-label fw-bold" })
+                            @Html.DropDownListFor(model => model.Id_Region, (List<SelectListItem>)ViewBag.RegionesSelectList, "Seleccionar región", new { @class = "form-select", id = "regiones-select-modal", onchange = "actualizarPuntosModal()" })
+                            @Html.ValidationMessageFor(model => model.Id_Region, "", new { @class = "text-danger control-label" })
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-6">
+                            @Html.LabelFor(model => model.Id_Punto_Atencion, htmlAttributes: new { @class = "form-label fw-bold" })
+                            @Html.DropDownListFor(model => model.Id_Punto_Atencion, new List<SelectListItem>(), "Seleccionar punto", new { @class = "form-select", id = "puntos-select-modal" })
+                            @Html.ValidationMessageFor(model => model.Id_Punto_Atencion, "", new { @class = "text-danger control-label" })
+                        </div>
+                        <div class="col-6">
+                            @Html.LabelFor(model => model.Id_Cargo, htmlAttributes: new { @class = "form-label fw-bold" })
+                            @Html.DropDownListFor(model => model.Id_Cargo, (List<SelectListItem>)ViewBag.PuestosSelectList, "Seleccionar punto", new { @class = "form-select", id = "cargos-select-modal" })
+                            @Html.ValidationMessageFor(model => model.Id_Cargo, "", new { @class = "text-danger control-label" })
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <asp:UpdatePanel runat="server">
+                        <ContentTemplate>
+                            <button type="submit" name="btnGuardar" id="guardarModal" class="btn btn-dark my-action-link">
+                                Guardar <i class="fa fa-save"></i>
+                            </button>
+                            <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Cancelar <i class="fa fa-close"></i></button>
+                        </ContentTemplate>
+                    </asp:UpdatePanel>
+                </div>
+            }
+        </div>
+    </div>
+</div>
+<div class="modal" id="modalNotificacion" tabindex="-1">
+    <div class="modal-dialog">
+        <div class="modal-content">
+
+            <div id="headerNotificacion" class="modal-header">
+                <h5 class="modal-title text-white">Notificación del sistema</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <p id="mensajeNotificacion"></p>
+            </div>
+            <div class="modal-footer">
+                @if (ViewBag.Eliminar == "True")
+                {
+                    <a href="@Url.Action("eliminarUsuario", new {id = @ViewBag.IdEliminar})" class="btn btn-warning text-white" )>
+                        <i class="fa fa-trash text-white"></i> Continuar
+                    </a>
+                }
+                <button type="button" id="btnCerrarNotificacion" class="btn" data-bs-dismiss="modal" aria-label="Close"><i class="fa fa-minus"></i> Cerrar</button>
+            </div>
+
+        </div>
+    </div>
+</div>
+@section Scripts{
+    <script>
+        function actualizarPuntosModal() {
+            var regionId = $('#regiones-select-modal').val();
+            $.ajax({
+                url: '/UsuarioPuntoAtencion/ObtenerPuntosDeRegion',
+                type: 'GET',
+                data: { IdRegion: regionId },
+                success: function (data) {
+                    // actualizar contenido del segundo dropdown
+                    var dropdownPuntos = $('#puntos-select-modal');
+                    dropdownPuntos.empty();
+                    dropdownPuntos.append('<option value="">Seleccionar punto</option>'); // Agregar opción vacía
+                    $.each(data, function (i, punto) {
+                        dropdownPuntos.append($('<option></option>').val(punto.Value).html(punto.Text));
+                    });
+                dropdownPuntos.val(@ViewBag.IdPuntoModal);
+                }
+            });
+        }
+
+        function obtenerDatosUsuario() {
+            var Cui = $('#txtCuiModal').val();
+            $.ajax({
+                url: '/UsuarioPuntoAtencion/ObtenerDatosDeUsuario',
+                type: 'GET',
+                data: { cui: Cui },
+                success: function (data) {
+                    if (data[0] != null) {
+                        if (data[0].Id_Punto_Atencion == 1) {
+                            var Nombre = data[0].Nombres + " " + data[0].Apellidos;
+                            var Email = data[0].Email;
+                            $('#errorCui').text('');
+                            $('#txtNombre').val(Nombre);
+                            $('#txtEmailModal').val(Email);
+                            $('#guardarModal').prop('disabled', false);
+                        } else {
+                            $('#errorCui').text('El usuario ya existe en el punto de atención ' + data[0].Nombre_Punto_Atencion);
+                            $('#txtNombre').val('');
+                            $('#txtEmailModal').val('');
+                            $('#guardarModal').prop('disabled', true);
+                        }                        
+                    } else {
+                        $('#errorCui').text('El usuario no existe');
+                        $('#txtNombre').val('');
+                        $('#txtEmailModal').val('');
+                        $('#guardarModal').prop('disabled', true);
+                    }
+
+                }
+            });
+        }
+
+        $(document).ready(function () {
+            $('#btnBuscar').click(function () {
+                actualizarTablaUsuarios();
+            });
+        });
+
+        function actualizarTablaUsuarios() {
+            // Obtener los valores de los filtros
+            var busqueda = $('#txtBusqueda').val();
+            var regionId = $('#regiones-select').val();
+            var puntoId = $('#puntos-select').val();
+            //var filtro2 = $('#filtro2').val();
+
+            // Realizar la petición AJAX al controlador con los filtros
+            $.ajax({
+                url: '/UsuarioPuntoAtencion/Paginacion',
+                type: 'GET',
+                data: { busqueda: busqueda, idRegion: regionId, idPuntoAtencion: puntoId },
+                success: function (result) {
+                    // Actualizar la tabla con los resultados de la búsqueda
+                    $('#tablaUsuarios').html(result);
+                },
+                error: function (error) {
+                    // Manejar el error en caso de que la petición falle
+                    console.log(error);
+                }
+            });
+        }
+
+        function actualizarPuntos(idRegion) {
+            var regionId = $('#regiones-select').val();
+            $.ajax({
+                url: '/UsuarioPuntoAtencion/ObtenerPuntosDeRegion',
+                type: 'GET',
+                data: { IdRegion: regionId },
+                success: function (data) {
+                    // actualizar contenido del segundo dropdown
+                    var dropdownPuntos = $('#puntos-select');
+                    dropdownPuntos.empty();
+                    dropdownPuntos.append('<option value="">Seleccionar punto</option>'); // Agregar opción vacía
+                    $.each(data, function (i, punto) {
+                        dropdownPuntos.append($('<option></option>').val(punto.Value).html(punto.Text));
+                    });
+                    actualizarTablaUsuarios();
+                }
+            });
+        }
+
+        function cargarFiltros() {
+            var regionValue = document.getElementById("regiones-select").value;
+            var puntoValue = document.getElementById("puntos-select").value;
+            var actionLinks = document.querySelectorAll(".my-action-link");
+            var txtBusqueda = document.getElementById("txtBusqueda").value;
+            actionLinks.forEach(function (link) {
+                link.href = link.href.replace("REGION_VALUE", regionValue);
+                link.href = link.href.replace("BUSQUEDA_VALUE", txtBusqueda);
+                link.href = link.href.replace("PUNTO_VALUE", puntoValue);
+            });
+            return true;
+        }
+
+    </script>
+
+    @if (ViewBag.ModalAccion == "editar")
+    {
+        <script>
+            $(document).ready(function () {
+                actualizarPuntosModal();
+
+            });
+        </script>
+    }
+
+    @if (ViewBag.MostrarModal != null && ViewBag.MostrarModal)
+    {
+        <script>
+            function mostrarNotificacion(tipo, mensaje) {
+                var claseEnc = definirTipoNotificacion(tipo, "Encabezado");
+                var claseBoton = definirTipoNotificacion(tipo, "Boton");
+                var header = document.getElementById("headerNotificacion");
+                header.className = claseEnc;
+                var btnCerrarNotificacion = document.getElementById("btnCerrarNotificacion");
+                btnCerrarNotificacion.className = claseBoton;
+                var mensajeNotificaion = document.getElementById("mensajeNotificacion");
+                mensajeNotificaion.innerHTML = '<i class="fa fa-comments-o"></i> ' + mensaje;
+                //mensajeNotificaion.textContent = mensaje;
+                var modalNotificacion = new bootstrap.Modal(document.getElementById('modalNotificacion'), {
+                    backdrop: 'static',
+                    keyboard: false
+                });
+                modalNotificacion.show();
+            }
+
+
+            function definirTipoNotificacion(tipo, elemento) {
+                if (tipo == 1) {
+                    claseEnc = "modal-header bg-black";
+                    claseBoton = "btn btn-outline-dark";
+                } else if (tipo == 2) {
+                    claseEnc = "modal-header bg-info";
+                    claseBoton = "btn btn-danger";
+                } else if (tipo == 3) {
+                    claseEnc = "modal-header bg-danger";
+                    claseBoton = "btn btn-danger";
+                } else if (tipo == 4) {
+                    claseEnc = "modal-header bg-warning";
+                    claseBoton = "btn btn-danger";
+                }
+                if (elemento == "Boton") {
+                    return claseBoton;
+                } else {
+                    return claseEnc;
+                }
+            }
+
+            $(document).ready(function () {
+                var mensaje = "@ViewBag.Mensaje";
+                var tipo = @ViewBag.Tipo;
+                mostrarNotificacion(tipo, mensaje);
+            });
+        </script>
+
+    }
+
+    @if (ViewBag.MostrarModalNuevo != null && ViewBag.MostrarModalNuevo)
+    {
+        <script>
+            function mostrarModalNuevo() {
+                var modalNuevo = new bootstrap.Modal(document.getElementById('modalNuevo'), {
+                    backdrop: 'static',
+                    keyboard: false
+                });
+                modalNuevo.show();
+            }
+
+            $(document).ready(function () {
+                mostrarModalNuevo();
+            });
+        </script>
+
+    }
+}

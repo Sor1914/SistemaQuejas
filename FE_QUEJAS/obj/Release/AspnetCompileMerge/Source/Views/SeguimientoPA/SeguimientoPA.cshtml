@@ -1,0 +1,556 @@
+﻿@model FE_QUEJAS.Models.EncabezadoQueja
+@{
+    ViewBag.Title = "SeguimientoPA";
+    Layout = ViewBag.Layout;
+}
+<div class="container" style="margin-top: 15px; margin-bottom: 15px">
+    <div class="card" style="margin-top: 15px">
+        <h5 class="card-header">Seguimiento Punto Atención</h5>
+        <div class="card-body">
+            <div class="row">
+                <div id="tablaQuejasAsignadas">
+                    @Html.Partial("_TablaQuejasPA")
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal fade" id="modalVer" tabindex="-1" aria-labelledby="exampleModalLabel">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <asp:UpdatePanel runat="server">
+                    <ContentTemplate>
+                        <input id="modalAccion" value="@ViewBag.ModalAccion" type="hidden" runat="server" />
+                        <h5 class="modal-title" id="modalHeader" runat="server"></h5>
+                    </ContentTemplate>
+                    <h5>Visualizar Queja</h5>
+                </asp:UpdatePanel>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <asp:HiddenField runat="server" ID="hiUsuario" />
+                <div class="row">
+                    <div class="row">
+                        <div class="col-12">
+                            <Center>
+                                <h4>@ViewBag.Correlativo</h4>
+                            </Center>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-6">
+                            <div class="row">
+                                <div class="col-12">
+                                    <label class="fw-bold">Nombre:</label>
+                                </div>
+                                <br />
+                                <div class="col-12">
+                                    <text class="form-control disabled">@ViewBag.Nombre</text>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-6">
+                            <div class="row">
+                                <div class="col-12">
+                                    <label class="fw-bold">Email:</label>
+                                </div>
+                                <div class="col-12">
+                                    <text class="form-control disabled">@ViewBag.Email</text>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-6">
+                            <div class="row">
+                                <div class="col-12">
+                                    <label class="fw-bold">Telefono:</label>
+                                </div>
+                                <div class="col-12">
+                                    <text class="form-control disabled">@ViewBag.Telefono</text>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-6">
+                            <div class="row">
+                                <div class="col-12">
+                                    <label class="fw-bold">Etapa:</label>
+                                </div>
+                                <div class="col-12">
+                                    <text class="form-control disabled">@ViewBag.Etapa</text>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-6">
+                            <div class="row">
+                                <div class="col-12">
+                                    <label class="fw-bold">Región:</label>
+                                </div>
+                                <div class="col-12">
+                                    <text class="form-control disabled">@ViewBag.Region</text>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-6">
+                            <div class="row">
+                                <div class="col-12">
+                                    <label class="fw-bold">P.A.:</label>
+                                </div>
+                                <div class="col-12">
+                                    <text class="form-control disabled">@ViewBag.PuntoAtencion</text>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-12">
+                            <label class="fw-bold">Queja:</label>
+                            <center><text class="form-control">@ViewBag.Queja</text></center>
+                        </div>
+                    </div>
+                    <br />
+                    <br />
+                    <br />
+                    <div class="row">
+                        <div class="col-12 text-center">
+                            @if (ViewBag.Url != "")
+                            {
+                                using (Html.BeginForm("DescargarArchivoAdjunto", "SeguimientoPA", FormMethod.Post))
+                                {
+                                    <input type="text" name="urlArchivo" value="@ViewBag.Url" hidden="hidden" />
+                                    <button type="submit" class="btn btn-success">
+                                        <i class="fa fa-download"></i> Descargar
+                                    </button>
+                                }
+                            }
+                        </div>
+                    </div>
+                    @if (ViewBag.ListaDetalle != null)
+                    {
+                        foreach (var detalle in ViewBag.ListaDetalle)
+                        {
+                            <br />
+                            <br />
+                            <br />
+                            <hr />
+                            <div class="row">
+                                <div class="row">
+                                    <div class="col-12 text-center">
+                                        @detalle.Fecha_Detalle
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-12">
+                                        <label class="fw-bold">Usuario:</label>
+                                        <text class="form-control disabled">@detalle.Id_Usuario</text>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-12">
+                                        <label class="fw-bold">Detalle:</label>
+                                        <center><text class="form-control">@detalle.Comentario</text></center>
+                                    </div>
+                                </div>
+                                <br />
+                                <br />
+                                <br />
+                                <div class="row">
+                                    <div class="col-12 text-center">
+                                        @if (@detalle.Direccion_Archivo != "")
+                                        {
+                                            using (Html.BeginForm("DescargarArchivoAdjunto", "SeguimientoPA", FormMethod.Post))
+                                            {
+                                                <input type="text" name="urlArchivo" value="@detalle.Direccion_Archivo" hidden="hidden" />
+                                                <button type="submit" class="btn btn-success">
+                                                    <i class="fa fa-download"></i> Descargar
+                                                </button>
+                                            }
+                                        }
+                                    </div>
+                                </div>
+                                <br />
+                                <br />
+                                <br />
+                            </div>
+
+                        }
+                    }
+                </div>
+            </div>
+            <div class="modal-footer">
+                <asp:UpdatePanel runat="server">
+                    <ContentTemplate>
+                        <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Cancelar <i class="fa fa-close"></i></button>
+                    </ContentTemplate>
+                </asp:UpdatePanel>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal fade" id="modalDetalle" tabindex="-1" aria-labelledby="exampleModalLabel">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <asp:UpdatePanel runat="server">
+                    <ContentTemplate>
+                        <input id="modalAccion" value="@ViewBag.ModalAccion" type="hidden" runat="server" />
+                        <h5 class="modal-title" id="modalHeader" runat="server"></h5>
+                    </ContentTemplate>
+                    <h5>Detalle de Queja</h5>
+                </asp:UpdatePanel>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            @using (Html.BeginForm("guardarDetalle", "SeguimientoPA", new { idEncabezado = @ViewBag.IdEncabezado }, FormMethod.Post, new { enctype = "multipart/form-data" }))
+            {
+                <div class="modal-body">
+                    <asp:HiddenField runat="server" ID="hiUsuario" />
+                    <div class="row">
+                        <div class="col-12">
+                            @Html.LabelFor(model => model.Comentario, htmlAttributes: new { @class = "form-label fw-bold" })
+                            @Html.TextAreaFor(model => model.Comentario, new { @class = "form-control", id = "txtSiglasQueja" })
+                            @Html.ValidationMessageFor(model => model.Comentario, "", new { @class = "text-danger control-label" })
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-12">
+                            <label for="archivo" class="form-label fw-bold">Seleccionar archivo:</label>
+                            <input type="file" id="archivo" name="ArchivoAdjunto" class="form-control">
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <asp:UpdatePanel runat="server">
+                        <ContentTemplate>
+                            <button type="submit" name="btnGuardar" id="guardarModal" class="btn btn-dark my-action-link">
+                                Guardar <i class="fa fa-save"></i>
+                            </button>
+                            <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Cancelar <i class="fa fa-close"></i></button>
+                        </ContentTemplate>
+                    </asp:UpdatePanel>
+                </div>
+            }
+        </div>
+    </div>
+</div>
+<div class="modal fade" id="modalRechazo" tabindex="-1" aria-labelledby="exampleModalLabel">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header bg-danger">
+                <asp:UpdatePanel runat="server">
+                    <ContentTemplate>
+                        <input id="modalAccion" value="@ViewBag.ModalAccion" type="hidden" runat="server" />
+                        <h5 class="modal-title" id="modalHeader" runat="server"></h5>
+                    </ContentTemplate>
+                    <h5>Rechazar Queja</h5>
+                </asp:UpdatePanel>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            @using (Html.BeginForm("guardarRechazoQueja", "SeguimientoPA", new { idEncabezado = @ViewBag.IdEncabezado }, FormMethod.Post, new { enctype = "multipart/form-data" }))
+            {
+                <div class="modal-body">
+                    <asp:HiddenField runat="server" ID="hiUsuario" />
+                    <p><i class="fa fa-comments-o"></i> ¿Está seguro de que quiere rechazar este registro?</p>
+                    <div class="row">
+                        <div class="col-12">
+                            @Html.LabelFor(model => model.Justificacion, htmlAttributes: new { @class = "form-label fw-bold" })
+                            @Html.TextAreaFor(model => model.Justificacion, new { @class = "form-control", id = "txtSiglasQueja" })
+                            @Html.ValidationMessageFor(model => model.Justificacion, "", new { @class = "text-danger control-label" })
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <asp:UpdatePanel runat="server">
+                        <ContentTemplate>
+                            <button type="submit" name="btnGuardar" id="guardarModal" class="btn btn-dark my-action-link">
+                                Guardar <i class="fa fa-save"></i>
+                            </button>
+                            <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Cancelar <i class="fa fa-close"></i></button>
+                        </ContentTemplate>
+                    </asp:UpdatePanel>
+                </div>
+            }
+        </div>
+    </div>
+</div>
+<div class="modal" id="modalNotificacion" tabindex="-1">
+    <div class="modal-dialog">
+        <div class="modal-content">
+
+            <div id="headerNotificacion" class="modal-header">
+                <h5 class="modal-title text-white">Notificación del sistema</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <p id="mensajeNotificacion"></p>
+            </div>
+            <div class="modal-footer">
+                @if (ViewBag.Eliminar == "True")
+                {
+                    <a href="@Url.Action("eliminarTipo", new {id = @ViewBag.IdEliminar})" class="btn btn-warning text-white" )>
+                        <i class="fa fa-trash text-white"></i> Continuar
+                    </a>
+                }
+                <button type="button" id="btnCerrarNotificacion" class="btn" data-bs-dismiss="modal" aria-label="Close"><i class="fa fa-minus"></i> Cerrar</button>
+            </div>
+
+        </div>
+    </div>
+</div>
+<div class="modal fade" id="modalAsignar" tabindex="-1" aria-labelledby="exampleModalLabel">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <asp:UpdatePanel runat="server">
+                    <ContentTemplate>
+                        <input id="modalAccion" value="@ViewBag.ModalAccion" type="hidden" runat="server" />
+                        <h5 class="modal-title" id="modalHeader" runat="server"></h5>
+                    </ContentTemplate>
+                    <h5>Asignación de Queja</h5>
+                </asp:UpdatePanel>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            @using (Html.BeginForm("guardarAsignacionQueja", "SeguimientoPA", new { idEncabezado = @ViewBag.IdEncabezado }, FormMethod.Post))
+            {
+                <div class="modal-body">
+                    <p><i class="fa fa-comments-o"></i> Queja será actualizada a estado procedente, oprima Aceptar si está de acuerdo o Cerrar si no lo está</p>
+                </div>
+                <div class="modal-footer">
+                    <asp:UpdatePanel runat="server">
+                        <ContentTemplate>
+                            <button type="submit" name="btnGuardar" id="guardarModal" class="btn btn-dark my-action-link">
+                                Aceptar <i class="fa fa-save"></i>
+                            </button>
+                            <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Cancelar <i class="fa fa-close"></i></button>
+                        </ContentTemplate>
+                    </asp:UpdatePanel>
+                </div>
+            }
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="modalResolver" tabindex="-1" aria-labelledby="exampleModalLabel">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <asp:UpdatePanel runat="server">
+                    <ContentTemplate>
+                        <input id="modalAccion" value="@ViewBag.ModalAccion" type="hidden" runat="server" />
+                        <h5 class="modal-title" id="modalHeader" runat="server"></h5>
+                    </ContentTemplate>
+                    <h5>Asignación de Queja</h5>
+                </asp:UpdatePanel>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            @using (Html.BeginForm("resolverQueja", "SeguimientoPA", new { idEncabezado = @ViewBag.IdEncabezado }, FormMethod.Post))
+            {
+                <div class="modal-body">
+                    <p><i class="fa fa-comments-o"></i> Queja será resuelta, verificar que haya ingresado detalles de la gestión, no se podrá ingresar más información</p>
+                </div>
+                <div class="modal-footer">
+                    <asp:UpdatePanel runat="server">
+                        <ContentTemplate>
+                            <button type="submit" name="btnGuardar" id="guardarModal" class="btn btn-dark my-action-link">
+                                Resolver <i class="fa fa-save"></i>
+                            </button>
+                            <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Cancelar <i class="fa fa-close"></i></button>
+                        </ContentTemplate>
+                    </asp:UpdatePanel>
+                </div>
+            }
+        </div>
+    </div>
+</div>
+@section Scripts{
+    <script>
+        var archivoInput = document.getElementById('archivo');
+        archivoInput.addEventListener('change', validarArchivo);
+
+        function validarArchivo() {
+            var archivo = archivoInput.files[0];
+            var maxSize = 10 * 1024 * 1024; // Tamaño máximo en bytes (10 MB)
+            var allowedExtensions = ['jpg', 'jpeg', 'png', 'xlsx', 'xls', 'pdf', 'doc', 'docx']; // Extensiones permitidas
+
+            // Validar el tamaño del archivo
+            if (archivo.size > maxSize) {
+                alert('El archivo debe tener un tamaño menor a 10 MB');
+                archivoInput.value = ''; // Limpiar el campo de archivo seleccionado
+                return;
+            }
+
+            // Obtener la extensión del archivo
+            var extension = archivo.name.split('.').pop().toLowerCase();
+
+            // Validar la extensión del archivo
+            if (!allowedExtensions.includes(extension)) {
+                alert('El archivo debe tener una de las siguientes extensiones: ' + allowedExtensions.join(', '));
+                archivoInput.value = ''; // Limpiar el campo de archivo seleccionado
+                return;
+            }
+
+            // Si se pasa todas las validaciones, puedes continuar con el procesamiento del archivo
+            console.log('Archivo válido');
+        }
+
+         function actualizarPuntosModal() {
+            var regionId = $('#regiones-select-modal').val();
+            $.ajax({
+                url: '/Asignacion/ObtenerPuntosDeRegion',
+                type: 'GET',
+                data: { IdRegion: regionId },
+                success: function (data) {
+                    // actualizar contenido del segundo dropdown
+                    var dropdownPuntos = $('#puntos-select-modal');
+                    dropdownPuntos.empty();
+                    dropdownPuntos.append('<option value="">Seleccionar punto</option>'); // Agregar opción vacía
+                    $.each(data, function (i, punto) {
+                        dropdownPuntos.append($('<option></option>').val(punto.Value).html(punto.Text));
+                    });
+                dropdownPuntos.val(@ViewBag.IdPuntoModal);
+                }
+            });
+        }
+
+    </script>
+    @if (ViewBag.MostrarModalVer != null && ViewBag.MostrarModalVer)
+    {
+        <script>
+            function mostrarModalVer() {
+                var modalVer = new bootstrap.Modal(document.getElementById('modalVer'), {
+                    backdrop: 'static',
+                    keyboard: false
+                });
+                modalVer.show();
+            }
+
+            $(document).ready(function () {
+                mostrarModalVer();
+            });
+        </script>
+    }
+
+    @if (ViewBag.MostrarModalResolver != null && ViewBag.MostrarModalResolver)
+    {
+        <script>
+            function mostrarModalResolver() {
+                var modalResolver = new bootstrap.Modal(document.getElementById('modalResolver'), {
+                    backdrop: 'static',
+                    keyboard: false
+                });
+                modalResolver.show();
+            }
+
+            $(document).ready(function () {
+                mostrarModalResolver();
+            });
+        </script>
+    }
+
+    @if (ViewBag.MostrarModalRechazo != null && ViewBag.MostrarModalRechazo)
+    {
+        <script>
+            function mostrarModalRechazo() {
+                var modalRechazo = new bootstrap.Modal(document.getElementById('modalRechazo'), {
+                    backdrop: 'static',
+                    keyboard: false
+                });
+                modalRechazo.show();
+            }
+
+            $(document).ready(function () {
+                mostrarModalRechazo();
+            });
+        </script>
+    }
+
+    @if (ViewBag.MostrarModalAsignar != null && ViewBag.MostrarModalAsignar)
+    {
+        <script>
+            function mostrarModalAsignar() {
+                var modalAsignar = new bootstrap.Modal(document.getElementById('modalAsignar'), {
+                    backdrop: 'static',
+                    keyboard: false
+                });
+                modalAsignar.show();
+            }
+
+            $(document).ready(function () {
+                mostrarModalAsignar();
+            });
+        </script>
+    }
+
+
+    @if (ViewBag.MostrarModalDetalle != null && ViewBag.MostrarModalDetalle)
+    {
+        <script>
+            function mostrarModalDetalle() {
+                var modalDetalle = new bootstrap.Modal(document.getElementById('modalDetalle'), {
+                    backdrop: 'static',
+                    keyboard: false
+                });
+                modalDetalle.show();
+            }
+
+            $(document).ready(function () {
+                mostrarModalDetalle();
+            });
+        </script>
+    }
+
+    @if (ViewBag.MostrarModal != null && ViewBag.MostrarModal)
+    {
+        <script>
+            function mostrarNotificacion(tipo, mensaje) {
+                var claseEnc = definirTipoNotificacion(tipo, "Encabezado");
+                var claseBoton = definirTipoNotificacion(tipo, "Boton");
+                var header = document.getElementById("headerNotificacion");
+                header.className = claseEnc;
+                var btnCerrarNotificacion = document.getElementById("btnCerrarNotificacion");
+                btnCerrarNotificacion.className = claseBoton;
+                var mensajeNotificaion = document.getElementById("mensajeNotificacion");
+                mensajeNotificaion.innerHTML = '<i class="fa fa-comments-o"></i> ' + mensaje;
+                //mensajeNotificaion.textContent = mensaje;
+                var modalNotificacion = new bootstrap.Modal(document.getElementById('modalNotificacion'), {
+                    backdrop: 'static',
+                    keyboard: false
+                });
+                modalNotificacion.show();
+            }
+
+
+            function definirTipoNotificacion(tipo, elemento) {
+                if (tipo == 1) {
+                    claseEnc = "modal-header bg-black";
+                    claseBoton = "btn btn-outline-dark";
+                } else if (tipo == 2) {
+                    claseEnc = "modal-header bg-info";
+                    claseBoton = "btn btn-danger";
+                } else if (tipo == 3) {
+                    claseEnc = "modal-header bg-danger";
+                    claseBoton = "btn btn-danger";
+                } else if (tipo == 4) {
+                    claseEnc = "modal-header bg-warning";
+                    claseBoton = "btn btn-danger";
+                }
+                if (elemento == "Boton") {
+                    return claseBoton;
+                } else {
+                    return claseEnc;
+                }
+            }
+
+            $(document).ready(function () {
+                var mensaje = "@ViewBag.Mensaje";
+                var tipo = @ViewBag.Tipo;
+                mostrarNotificacion(tipo, mensaje);
+            });
+
+
+        </script>
+    }
+
+}
