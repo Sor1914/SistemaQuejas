@@ -80,7 +80,8 @@ namespace FE_QUEJAS.Controllers.OpcionesMenu
                 worksheet.Cell(2, 6).Value = "Resultado";
                 worksheet.Cell(2, 7).Value = "Medio de Ingreso";
                 worksheet.Cell(2, 8).Value = "Fecha de Creación";
-                var range1 = worksheet.Range(worksheet.Cell(1, 1), worksheet.Cell(2, 8)); // Rango de 8 columnas
+                worksheet.Cell(2, 9).Value = "Detalle";
+                var range1 = worksheet.Range(worksheet.Cell(1, 1), worksheet.Cell(2, 9)); // Rango de 8 columnas
                 range1.Style.Fill.BackgroundColor = XLColor.Black;
                 range1.Style.Font.FontColor = XLColor.White;
                 bool gris = false;
@@ -94,7 +95,8 @@ namespace FE_QUEJAS.Controllers.OpcionesMenu
                     worksheet.Cell(i + 3, 6).Value = listaEncabezado[i].Justificacion;
                     worksheet.Cell(i + 3, 7).Value = listaEncabezado[i].Nombre_Origen;
                     worksheet.Cell(i + 3, 8).Value = listaEncabezado[i].Fecha_Ingreso;
-                    var range = worksheet.Range(worksheet.Cell(i + 3, 1), worksheet.Cell(i + 3, 8)); // Rango de 8 columnas
+                    worksheet.Cell(i + 3, 9).Value = listaEncabezado[i].Detalle;
+                    var range = worksheet.Range(worksheet.Cell(i + 3, 1), worksheet.Cell(i + 3, 9)); // Rango de 8 columnas
                     if (gris)
                     {
                         range.Style.Fill.BackgroundColor = XLColor.Gray;
@@ -216,9 +218,15 @@ namespace FE_QUEJAS.Controllers.OpcionesMenu
                     using (var workbook = new XLWorkbook(stream))
                     {
                         var worksheet = workbook.Worksheet(1);
-
-                        foreach (var row in worksheet.Rows())
+                        var rows = worksheet.RangeUsed().RowsUsed();
+                        bool primero = true;
+                        foreach (var row in rows)
                         {
+                            if (primero)
+                            {
+                                primero = !primero;
+                                continue;
+                            }
                             var pdfTable = new PdfPTable(worksheet.Columns().Count());
 
                             foreach (var cell in row.Cells())

@@ -99,6 +99,7 @@ C:\Quejas\SistemaQuejas\FE_QUEJAS\bin\es\System.Web.WebPages.Deployment.resource
 C:\Quejas\SistemaQuejas\FE_QUEJAS\bin\es\System.Web.WebPages.Razor.resources.dll
 C:\Quejas\SistemaQuejas\FE_QUEJAS\bin\es\System.Web.Optimization.resources.dll
 C:\Quejas\SistemaQuejas\FE_QUEJAS\bin\Select.Html.dep
+C:\Quejas\SistemaQuejas\FE_QUEJAS\obj\Debug\FE_QUEJAS.csprojAssemblyReference.cache
 C:\Quejas\SistemaQuejas\FE_QUEJAS\obj\Debug\FE_QUEJAS.csproj.CoreCompileInputs.cache
 C:\Quejas\SistemaQuejas\FE_QUEJAS\obj\Debug\FE_QUEJAS.csproj.CopyComplete
 C:\Quejas\SistemaQuejas\FE_QUEJAS\obj\Debug\FE_QUEJAS.dll
