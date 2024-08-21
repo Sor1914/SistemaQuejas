@@ -12,8 +12,8 @@ namespace FE_QUEJAS.Services
     {
         public bool enviarCorreo(string[] correos, string asunto, string html)
         {
-            string username = "jsorm@miumg.edu.gt";
-            string password = "p(ZX(-^vd<";
+            string username = "";
+            string password = "";
 
             // Configuración del cliente SMTP
             SmtpClient client = new SmtpClient("smtp.gmail.com", 587);
